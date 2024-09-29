@@ -9,7 +9,7 @@ class Add(BaseModel):
     y: int
 
 # 使用装饰器
-@Tool(model=Add())
+@Tool(model=Add)
 def my_function(x, y):
     return x + y
 

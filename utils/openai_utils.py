@@ -29,7 +29,7 @@ def chat(messages, tools=None, user_prompt=None):
         model=config.OPENAI_MODEL,
         messages=messages,
         temperature=0.1,
-        tools=tools,
+        tools=[openai.pydantic_function_tool(tool) for tool in tools],
     )
     logger.info(f"openai response: {response.choices[0].message}")
     message = response.choices[0].message

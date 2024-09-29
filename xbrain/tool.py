@@ -1,5 +1,5 @@
 import openai
-
+import json
 tools = []
 
 class Tool:
@@ -26,6 +26,6 @@ def run_tool(openai_res):
     for tool_call in openai_res.tool_calls:
         info = _get_tool_by_name(tool_call.function.name)
         tool_func = info["func"]
-        res = tool_func(**tool_call.function.arguments)
-        res.append(res)
+        run_res = tool_func(**json.loads(tool_call.function.arguments))
+        res.append(run_res)
     return res
