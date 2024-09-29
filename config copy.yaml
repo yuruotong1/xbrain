@@ -1,0 +1,4 @@
+openai:
+  base_url: "https://api.openai-next.com/v1"
+  api_key: ""
+  model: "gpt-4o-2024-08-06"
