@@ -5,23 +5,18 @@ from utils.logging_utils import logger
 
 
 system_prompt = """
-## 目标 ##
-你是xbrain助手，可以帮助用户完成各种任务，以下是用户的需求：
 {prompt_user}
-######
 
-## 能力 ##
-1. 向用户介绍你的能力，你的能力需要从tool call中获取：
-
+## 上下文 ##
+1. 如果用户提到当前文件/当前代码，则指以下内容为当前文件内容作为上下文；
 ######
 """
 
 
-def chat(messages, tools=None, user_prompt=None):
+def chat(messages, tools=None, user_prompt=None, response_format=None):
     config = Config()
     client = OpenAI(base_url=config.OPENAI_BASE_URL, api_key=config.OPENAI_API_KEY)
     formatted_prompt = system_prompt.format(
-        # prompt_tools=[openai.pydantic_function_tool(tool) for tool in tools], 
         prompt_user=user_prompt
     )
     messages = [{"role": "system", "content": formatted_prompt}] + messages
@@ -29,6 +24,7 @@ def chat(messages, tools=None, user_prompt=None):
         model=config.OPENAI_MODEL,
         messages=messages,
         temperature=0.1,
+        **({"response_format": response_format} if response_format is not None else {}),
         tools=[openai.pydantic_function_tool(tool) for tool in tools],
     )
     logger.info(f"openai response: {response.choices[0].message}")

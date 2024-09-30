@@ -33,7 +33,7 @@ class ShowAllCommand(BaseModel):
 
 @xbrain_tool.Tool(model=ShowAllCommand)
 def show_all_command():
-    res = "我能够提供以下命令:\n\n"
+    res = "📜 我能够提供以下支持:\n\n"
     number = 1
     for tool in xbrain_tool.tools:
         res += f"{number}. {tool['name']}: {tool['description']}\n"

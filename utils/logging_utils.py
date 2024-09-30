@@ -27,6 +27,6 @@ error_fh.setFormatter(formatter)  # 为错误日志处理器指定格式
 
 # 为logger添加的日志处理器
 logger.addHandler(fh)
-logger.addHandler(ch)
+# logger.addHandler(ch)
 logger.addHandler(error_fh)  # 添加错误日志处理器
 
