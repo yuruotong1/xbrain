@@ -4,14 +4,14 @@ from xbrain import xbrain_tool
 from utils.openai_utils import chat
 import os
 
-class ChangeToAction(BaseModel):
+class XBrainChangeToAction(BaseModel):
     """将用户给出的函数转变为action"""
 
 class GenerateActionResponse(BaseModel):
     """生成action的响应"""
     code: str = Field(..., description="python代码")
 
-@xbrain_tool.Tool(model=ChangeToAction)
+@xbrain_tool.Tool(model=XBrainChangeToAction)
 def change_to_action(current_directory: str = ""):
     if not current_directory:
         # 获取当前目录
