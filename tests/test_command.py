@@ -1,11 +1,11 @@
 import os
 import unittest
-from command import command_action
+from command import help_action
 from command import change_to_action
 from xbrain import main
 class TestCommand(unittest.TestCase):
     def test_show_command(self):
-        res = command_action.show_all_command()
+        res = help_action.show_all_command()
         print(res)
 
     def test_run_command(self):

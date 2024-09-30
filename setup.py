@@ -13,7 +13,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'xb = command.command:main',
+            'xb = command.main:main',
         ],
     },
 )
