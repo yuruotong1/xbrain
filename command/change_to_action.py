@@ -2,12 +2,21 @@
 from pydantic import BaseModel
 from xbrain import xbrain_tool
 from utils.openai_utils import chat
-
+import os
 class ChangeToAction(BaseModel):
-    """将当前页面的函数转变为action"""
+    """将用户给出的函数转变为action"""
 
 @xbrain_tool.Tool(model=ChangeToAction)
 def change_to_action():
+    # 获取当前目录
+    current_directory = os.getcwd()
+    # 列出当前目录下所有文件和目录
+    all_files_and_dirs = os.listdir(current_directory)
+    # 过滤出所有以.py结尾的文件
+    py_files = [file for file in all_files_and_dirs if file.endswith('.py')]
+    # 打印所有找到的.py文件
+    print(py_files)
+    
     messages = [
         {"role": "user", "content": "将当前页面的函数转变为action"}
     ]
