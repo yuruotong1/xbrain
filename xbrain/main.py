@@ -1,5 +1,5 @@
 from utils.openai_utils import chat
-from xbrain.tool import run_tool, tools
+from xbrain.xbrain_tool import run_tool, tools
 
 
 def run(messages, user_prompt=None):
@@ -11,5 +11,5 @@ def run(messages, user_prompt=None):
         res = run_tool(chat_response)
     else:
         res = chat_response.content
-    return res
+    return "\n".join(res)
     

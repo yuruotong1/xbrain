@@ -9,7 +9,12 @@ class Tool:
     def __call__(self, func):
         # 利用 openai 官方的转换函数，提取name
         function = openai.pydantic_function_tool(self.model)
-        tools.append({"name": function["function"]["name"], "model":  self.model, "func": func})
+        tools.append({
+            "name": function["function"]["name"],
+            "description": function["function"].get("description", ""),
+            "model":  self.model,
+            "func": func
+        })
         def wrapper(*args, **kwargs):
             result = func(*args, **kwargs)
             return result
