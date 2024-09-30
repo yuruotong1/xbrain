@@ -14,6 +14,8 @@ system_prompt = """
 
 
 def chat(messages, tools=None, user_prompt=None, response_format=None):
+    if tools is None:
+        tools = []
     config = Config()
     client = OpenAI(base_url=config.OPENAI_BASE_URL, api_key=config.OPENAI_API_KEY)
     formatted_prompt = system_prompt.format(

@@ -32,5 +32,6 @@ def run_tool(openai_res):
         info = _get_tool_by_name(tool_call.function.name)
         tool_func = info["func"]
         run_res = tool_func(**json.loads(tool_call.function.arguments))
+        run_res = run_res if run_res else ""
         res.append(run_res)
     return res
