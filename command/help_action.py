@@ -13,3 +13,6 @@ def show_all_command():
         res += f"{number}. {tool['name']}: {tool['description']}\n"
         number += 1
     return res
+
+def get_command_map():
+    return {str(i + 1): tool['func'] for i, tool in enumerate(xbrain_tool.tools)}

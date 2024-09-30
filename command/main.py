@@ -1,5 +1,5 @@
 from xbrain.main import run
-from command.help_action import show_all_command
+from command.help_action import get_command_map, show_all_command
 import signal
 import sys
 
@@ -13,11 +13,17 @@ def main():
     print(res)
     
     signal.signal(signal.SIGINT, signal_handler)  # 捕获 Ctrl + C 信号
-    
+    command_map = get_command_map()
     while True:
         input_str = input(">>> ")
-        res = run([{"role": "user", "content": input_str}])
-        print(res)
+        if input_str == "exit":
+            break
+        elif input_str in command_map:
+            res = command_map[input_str]()
+            print(res)
+        else:
+            res = run([{"role": "user", "content": input_str}])
+            print(res)
     
 if __name__ == "__main__":
     main()
