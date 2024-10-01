@@ -1,5 +1,5 @@
 from xbrain.main import run
-from command.help_action import get_command_map, show_all_command
+from xbrain.command.help_action import get_command_map, show_all_command
 import signal
 import sys
 

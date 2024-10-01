@@ -15,5 +15,5 @@ def run(messages, chat_model=False, user_prompt=None):
         res = run_tool(chat_response)
     else:
         res = chat_response.content
-    return "\n".join(res)
+    return "\n".join(res) if isinstance(res, list) else res
     

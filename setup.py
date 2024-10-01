@@ -1,7 +1,7 @@
 from setuptools import setup
  
 setup(
-    name='xbrain',
+    name='pyxbrain',
     version='1.0.0',
     description='xbrain专注于构建一款可解释的AI开发框架',
     packages=['xbrain'],

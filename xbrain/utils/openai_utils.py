@@ -1,7 +1,7 @@
-from utils.config import Config
+from xbrain.utils.config import Config
 from openai import OpenAI
 import openai
-from utils.logging_utils import logger
+from xbrain.utils.logging_utils import logger
 
 
 system_prompt = """
