@@ -1,4 +1,4 @@
-from utils.openai_utils import chat
+from xbrain.utils.openai_utils import chat
 from xbrain.xbrain_tool import run_tool, tools
 
 

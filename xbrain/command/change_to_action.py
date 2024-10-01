@@ -1,7 +1,7 @@
 
 from pydantic import BaseModel, Field
 from xbrain import xbrain_tool
-from utils.openai_utils import chat
+from xbrain.utils.openai_utils import chat
 import os
 
 class XBrainChangeToAction(BaseModel):
