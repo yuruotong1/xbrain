@@ -34,7 +34,7 @@ def main():
         elif input_str in command_map:
             command_map[input_str]()
         else:
-            res = run([{"role": "user", "content": input_str}])
+            res = run([{"role": "user", "content": input_str}], chat_model=False)
             print(res)
     
 if __name__ == "__main__":

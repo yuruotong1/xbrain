@@ -14,7 +14,6 @@ class ChatMessage(BaseModel):
     content: str = Field(..., description="内容", examples=["请你帮我写一个函数", "你好，我是assistant"])
 
 class ChatRequestBody(BaseModel):
-    botId: str = Field(..., description="botId")
     messages: List[ChatMessage] = Field(..., description="消息列表")
 
 class ChatResponseChoiceMessage(BaseModel):
@@ -53,7 +52,7 @@ def chat(body: ChatRequestBody):
     """
     聊天接口
     """
-    run(body.messages)
+    res = run(body.messages, chat_model=True)
     return jsonify({"status": "success", "choices": [{"message": {"role": "assistant", "content": res}}]})
 
 class Deploy(BaseModel):
@@ -62,11 +61,7 @@ class Deploy(BaseModel):
 
 @xbrain_tool.Tool(model=Deploy)
 def deploy():
-    port = input("请输入服务器监听的端口，默认为8000\n>>> ")
-    if not port or not port.isdigit():
-        port = 8000
-    else:
-        port = int(port)    
-    print(f"Starting server, listen port: {port}")
+    port = 8001
+    print(f"开启服务，访问地址开始聊天: http://127.0.0.1:{port}/chat")
     http_server = WSGIServer(("0.0.0.0", port), app)
     http_server.serve_forever()
