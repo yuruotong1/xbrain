@@ -1,18 +1,20 @@
 ## 介绍
 
-xbrain 是一款可解释的AI开发框架。
+xbrain 是一款函数即智能架构。
 
-我们在做大模型的CT，让普通开发者都能驾驭大模型，互联网企业都能开展稳定的AI业务。
+我们是Function-as-a-Agent 简写为 Faaa。xbrain 提供一个微型的架构，用户不需要编写复杂提示词、交互逻辑或AI服务。
 
 ## 特点
 
 1. 普通python函数秒变智能；
-2. 0学习成本0安装，在终端与xbrain聊天为编程赋能；
-3. 本地serverless，将任一函数部署为AI server。
+2. 0学习成本，在终端与xbrain聊天完成函数转换、开发；
+3. 0代码部署为AI server。
 
 ## 使用指南
 
-使用 `pip install -U pyxbrain`安装最新版本，安装完成后，在命令行输入 `xb`即可进入圣诞。
+使用 `pip install -U pyxbrain`安装最新版本，安装完成后，在命令行输入 `xb` 即可开启对话。
+
+![1728084679680](image/README/1728084679680.png)
 
 ## 常见问题
 
