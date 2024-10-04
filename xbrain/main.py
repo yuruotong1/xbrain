@@ -12,7 +12,6 @@ def run(messages, chat_model=True, user_prompt=None):
             continue
         else:
             openai_tools.append(tool["model"])
-    print(openai_tools)
     chat_response = chat(messages, tools=openai_tools, user_prompt=user_prompt)
     if chat_response.content is None:
         res = run_tool(chat_response)

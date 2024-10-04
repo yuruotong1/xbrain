@@ -4,12 +4,12 @@ import signal
 from xbrain.main import run
 
 class XBrainChatAction(BaseModel):
-    """进入对话模式"""
+    """测试能力"""
     pass
 
 @xbrain_tool.Tool(model=XBrainChatAction)
 def chat_action():
-    print("进入对话模式！")
+    print("进入测试模式，直接聊天！")
     global running
     running = True
     signal.signal(signal.SIGINT, signal_handler)  # 捕获 Ctrl + C 信号

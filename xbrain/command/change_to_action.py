@@ -4,7 +4,7 @@ from xbrain.utils.openai_utils import chat
 import os
 
 class XBrainChangeToAction(BaseModel):
-    """将指定函数转变为action"""
+    """将函数转变为能力"""
 
 class GenerateActionResponse(BaseModel):
     """生成action的响应"""
