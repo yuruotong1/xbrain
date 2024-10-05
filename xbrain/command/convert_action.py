@@ -3,7 +3,7 @@ from xbrain import xbrain_tool
 from xbrain.utils.openai_utils import chat
 import os
 
-class XBrainChangeToAction(BaseModel):
+class ConvertAction(BaseModel):
     """将函数转变为能力"""
 
 class GenerateActionResponse(BaseModel):
@@ -20,14 +20,14 @@ class ExtractFunctionResponse(BaseModel):
     """提取函数"""
     funcs: list[Func] = Field(..., description="函数列表")
 
-@xbrain_tool.Tool(model=XBrainChangeToAction)
+@xbrain_tool.Tool(model=ConvertAction)
 def change_to_action(current_directory: str = ""):
     if not current_directory:
         # 获取当前目录
         current_directory = os.getcwd()
     # 递归列出当前目录及所有子目录下的.py文件
     py_files = []
-    for root, dirs, files in os.walk(current_directory):
+    for root, _, files in os.walk(current_directory):
         for file in files:
             relative_path = os.path.relpath(os.path.join(root, file), current_directory)
             if relative_path.startswith('.') or \
@@ -35,6 +35,7 @@ def change_to_action(current_directory: str = ""):
                 continue
             if file.endswith('.py') and file != '__init__.py':
                 py_files.append(relative_path)
+                
     # 打印所有找到的.py文件
     print("以下是发现的.py文件，请问你想对哪个文件进行操作？回复数字即可\n", "\n".join([f"{index}: {file}" for index, file in enumerate(py_files)]))
     file_index = input("请输入文件的数字序号：")
