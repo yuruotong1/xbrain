@@ -5,11 +5,7 @@
 
 一个开源的函数即智能架构。
 
- [Issues need help][help-wanted-url]
-
 🎞️[介绍视频](https://www.bilibili.com/video/BV1c52FY4E51/?share_source=copy_web&vd_source=c28e503b050f016c21660b69e391d391)
-
-![](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
 </div>
 
