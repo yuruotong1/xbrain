@@ -1,30 +1,32 @@
-<div align="center"><a name="readme-top"></a>
+<div align="center"><a name="readme-top">
 
 <img src="./image/README/logo.png" width="120" height="120" alt="XBrain">
 <h1>XBrain</h1>
 
 一个开源的函数即智能架构。
 
-🎞️[介绍视频](https://www.bilibili.com/video/BV1c52FY4E51/?share_source=copy_web&vd_source=c28e503b050f016c21660b69e391d391)
+🎞️[介绍视频](https://www.bilibili.com/video/BV1c52FY4E51/?share_source=copy_web&vd_source=c28e503b050f016c21660b69e391d391)|🗨[English](https://github.com/yuruotong1/xbrain/blob/master/README_EN.md)
 
 </div>
 
-xbrain 专注于构建一款可解释的AI开发框架，我们在做大模型的CT。
-
 我们想让任何一名开发者都能快速驾驭大模型。
 
-## 特点
+我们专注于构建 agent less，像 serverless 一样，开发者无需关心底层 Agent，直接将一个普通函数秒变智能。
 
-- 支持将普通函数秒变智能；
-- 用户无需任何Agent开发技能，即可快速搭建Agent应用。
+## ✨特点
 
-## 竞对是谁？
+* 🌈让普通函数轻松变智能：快速为您的函数赋予AI能力，提升应用性能。
+* 🔍 通过聊天界面智能生成代码：以对话方式与系统交互，加速开发过程。
+* 📦一键部署聊天服务器：快速上线，让用户及时体验您的智能功能。
+
+
+## 🖥竞对是谁？
 
 - LangChain
 - coze
 - dify
 
-## 谁会需要？
+## ⌨️谁会需要？
 
 **客户是哪些？**
 
@@ -38,12 +40,28 @@ xbrain 专注于构建一款可解释的AI开发框架，我们在做大模型�
 
 ---
 
-## 使用指南
+## 🍬使用指南
 
 使用 `pip install -U pyxbrain`安装最新版本，安装完成后，在命令行输入 `xb` 即可开启对话。
 
-![1728086044346](image/README/1728086044346.png)
+### 让普通函数轻松变智能
 
-## 常见问题
+通过在终端与xbrain进行对话，选择 `ConvertAction`，将任意一个普通的python函数转变为xbrain可识别的action。
+
+![convert](./image/README/xbrain_convert.gif)
+
+### 通过聊天界面智能生成代码
+
+通过在终端与xbrain进行对话，选择 `CreateAction`，输入你的需求，从0到1智能生成action，自动接入xbrain。
+
+![img](./image/README/xbrain_create.gif)
+
+### 一键部署聊天服务器
+
+通过在终端与xbrain进行对话，选择 `deploy`，一键部署为chat server，可通过api与之对话。
+
+![img](./image/README/xbrain_deploy.gif)
+
+## 🤝常见问题
 
 1. 如果输入 `xb` 时提示：“'xb' 不是内部或外部命令，也不是可运行的程序或批处理文件”。你需要把python的Scripts目录设置在环境变量下。

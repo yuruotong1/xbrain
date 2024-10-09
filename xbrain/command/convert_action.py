@@ -3,29 +3,29 @@ from xbrain import xbrain_tool
 from xbrain.utils.openai_utils import chat
 import os
 
-class ConvertAction(BaseModel):
-    """将函数转变为能力"""
+class XBrainConvertAction(BaseModel):
+    """Convert function to capability"""
 
 class GenerateActionResponse(BaseModel):
-    """生成action的响应"""
-    code: str = Field(..., description="python代码")
+    """Generate action response"""
+    code: str = Field(..., description="Python code")
 
 
 class Func(BaseModel):
-    """函数"""
-    name: str = Field(..., description="函数名称")
-    description: str = Field(..., description="用中文总结的函数描述")
+    """Function"""
+    name: str = Field(..., description="Function name")
+    description: str = Field(..., description="Function description")
 
 class ExtractFunctionResponse(BaseModel):
-    """提取函数"""
-    funcs: list[Func] = Field(..., description="函数列表")
+    """Extract function"""
+    funcs: list[Func] = Field(..., description="List of functions")
 
-@xbrain_tool.Tool(model=ConvertAction)
+@xbrain_tool.Tool(model=XBrainConvertAction)
 def change_to_action(current_directory: str = ""):
     if not current_directory:
-        # 获取当前目录
+        # Get current directory
         current_directory = os.getcwd()
-    # 递归列出当前目录及所有子目录下的.py文件
+    # Recursively list all .py files in the current directory and all subdirectories
     py_files = []
     for root, _, files in os.walk(current_directory):
         for file in files:
@@ -36,54 +36,56 @@ def change_to_action(current_directory: str = ""):
             if file.endswith('.py') and file != '__init__.py':
                 py_files.append(relative_path)
                 
-    # 打印所有找到的.py文件
-    print("以下是发现的.py文件，请问你想对哪个文件进行操作？回复数字即可\n", "\n".join([f"{index}: {file}" for index, file in enumerate(py_files)]))
-    file_index = input("请输入文件的数字序号：")
+    # Print all found .py files
+    print("The following .py files were found, which file would you like to operate on? Please reply with the number\n", "\n".join([f"{index}: {file}" for index, file in enumerate(py_files)]))
+    file_index = input("Please enter the numeric index of the file:")
     file_name = py_files[int(file_index)]
-    print("你选择了文件：", file_name)
-    # 获取文件内容
+    print("You have selected the file:", file_name)
+    # Get file content
     with open(file_name, 'r', encoding='utf-8') as file:
         file_content = file.read()
         funcs = chat([{"role": "user", "content": file_content}], user_prompt=extract_function_prompt, response_format=ExtractFunctionResponse).parsed
-        func_index = input("以下是提取到的函数，请问你想对哪个函数进行转换？回复数字即可\n" + \
+        func_index = input("The following functions have been extracted, which function would you like to convert? Please reply with the number\n" + \
                            "\n".join([f"{index}: {func.name} \"{func.description}\"" for index, func in enumerate(funcs.funcs)]) + "\n>>> ")
-        chat_content = "请对以下代码的" + \
-            funcs.funcs[int(func_index)].name + "函数进行转换：\n\n" + \
+        chat_content = "Please convert the following code's " + \
+            funcs.funcs[int(func_index)].name + " function:\n\n" + \
             file_content
         res = chat([{"role": "user", "content": chat_content}], user_prompt=prompt, response_format=GenerateActionResponse)
         if res.parsed:
-            print("转换后的action内容如下：\n", res.parsed.code.strip())
+            code = res.parsed.code.strip().replace("```python", "").replace("```", "")
+            with open(file_name, 'w', encoding='utf-8') as file:
+                file.write(code)
+            print("Conversion successful, file generated:", file_name)
         else:
-            print("解析失败")
+            print("Parsing failed")
 
 extract_function_prompt = """
-## 目标 ##
-你是一个代码识别助手，负责提取代码中的函数，你要做以下2件事：
+## Objective ##
+You are a code recognition assistant, responsible for extracting functions from the code, you need to do the following 2 things:
 
-1. 从代码中提取出函数；
-2. 返回函数名称、函数行号、函数描述。
-######
-"""
+1. Extract functions from the code;
+2. Return function name, function description.
+######"""
 
 prompt = """
-## 目标 ##
-你是一个代码助手，负责将函数转换为action，你要做以下2件事：
+## Objective ##
+You are a code assistant, responsible for converting functions into actions, you need to do the following 3 things:
 
-1. 在代码的顶部导入xbrain_tool，`from xbrain import xbrain_tool`
-2. 为当前页面，用户指定的函数添加@xbrain_tool.Tool装饰器，然后对该函数执行步骤3；
-3. 根据函数名称、函数逻辑（或者注释）、函数参数生成对应 pydantic 的 basemodel。
+1. Import xbrain_tool at the top of the code, `from xbrain import xbrain_tool`
+2. Add the @xbrain_tool.Tool decorator to the function specified by the user on the current page, then perform step 3;
+3. Generate the corresponding pydantic basemodel based on the function name, function logic (or comments), and function parameters.
 ######
 
-## 注意 ##
-只修改用户指定的函数。
+## Note ##
+Only modify the function specified by the user.
 ######
 
-## 返回结果 ##
-返回代码
+## Return Result ##
+Return code
 ######
 
-## 案例 ##
-输入：
+## Example ##
+Input:
 ```python
 def add(a: int, b: int) -> int:
     \"\"\"
@@ -92,13 +94,13 @@ def add(a: int, b: int) -> int:
     return a + b
 ```
 
-输出：
+Output:
 ```python
 from xbrain import xbrain_tool
 class Add(BaseModel):
-    \"\"\"将两个数相加\"\"\"
-    a: int = Field(..., description="第一个数")
-    b: int = Field(..., description="第二个数")
+    \"\"\"Add two numbers\"\"\"
+    a: int = Field(..., description="The first number")
+    b: int = Field(..., description="The second number")
 
 @xbrain_tool.Tool(model=Add)
 def add(a: int, b: int) -> int:

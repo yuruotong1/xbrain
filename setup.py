@@ -4,7 +4,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name='pyxbrain',
-    version='1.0.8',
+    version='1.0.9',
     description='xbrain专注于构建一款可解释的AI开发框架',
     long_description=long_description, 
     long_description_content_type="text/markdown",  

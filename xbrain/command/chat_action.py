@@ -1,30 +1,31 @@
 from xbrain import xbrain_tool
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 import signal
 from xbrain.main import run
+from xbrain.utils.import_utils import import_action
 
 class XBrainChatAction(BaseModel):
-    """测试能力"""
+    """Test capabilities"""
     pass
 
 @xbrain_tool.Tool(model=XBrainChatAction)
 def chat_action():
-    print("进入测试模式，直接聊天！")
+    print("Entering test mode, direct chat!")
     global running
     running = True
-    signal.signal(signal.SIGINT, signal_handler)  # 捕获 Ctrl + C 信号
+    signal.signal(signal.SIGINT, signal_handler)  # Capture Ctrl + C signal
     while running:
         try:
             input_str = input("💬 ")
-        # 当使用 ctrl + c 退出时，会抛出 EOFError 异常
+        # When exiting using ctrl + c, an EOFError exception is thrown
         except EOFError:
             break
         if input_str == "exit":
             break
         res = run([{"role": "user", "content": input_str}], chat_model=True)
-        print(res)
+        print("chat action result: \n", res)
 
 def signal_handler(sig, frame):
-    print("\n退出对话模式，期待下次再见！")
+    print("\nExiting chat mode, looking forward to seeing you again!")
     global running
     running = False

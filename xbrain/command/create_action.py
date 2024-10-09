@@ -4,18 +4,18 @@ from pydantic import BaseModel, Field
 from xbrain.utils.openai_utils import chat
 
 class XBrainCreateAction(BaseModel):
-    """创建能力"""
+    """Create capability"""
     pass
 
 class GenerateActionResponse(BaseModel):
-    """生成action的响应"""
-    py_name: str = Field(..., description="py文件名称")
-    code: str = Field(..., description="python代码")
+    """Response for generating an action"""
+    py_name: str = Field(..., description="Python file name")
+    code: str = Field(..., description="Python code")
 
 @xbrain_tool.Tool(model=XBrainCreateAction)
 def create_action():
-    action_description = input("action是用来干什么的：")
-    print("功能生成中...")
+    action_description = input("What is the action for:\n")
+    print("##Generating function##")
     res = chat([{"role": "user", "content": action_description}], user_prompt=prompt, response_format=GenerateActionResponse)
     if res.parsed:
         current_directory = os.getcwd()
@@ -23,38 +23,38 @@ def create_action():
         code = res.parsed.code.strip().replace("```python", "").replace("```", "")
         with open(file_path, 'w', encoding='utf-8') as file:
             file.write(code)
-        print("创建成功，已生成文件：", file_path)
+        print("Creation successful, file generated:", file_path)
     else:
-        print("解析失败")
+        print("Parsing failed")
 
 
 
 prompt = """
-## 目标 ##
-你是一个代码助手，负责将用户的需求转换为action，你要做以下2件事：
+## Objective ##
+You are a code assistant responsible for converting user requirements into actions. You need to do the following:
 
-1. 充分理解用户的需求，并将其转换为action
-1. 在代码的顶部导入xbrain_tool，`from xbrain import xbrain_tool`
-2. 根据用户的描述生成一个函数，并引入适当的python包，为该函数添加@xbrain_tool.Tool装饰器；
-3. 根据函数名称、函数逻辑（或者注释）、函数参数生成对应 pydantic 的 basemodel。
-4. 起一个py文件的名称并返回。
+1. Fully understand the user's requirements and convert them into an action.
+2. Import xbrain_tool at the top of the code, `from xbrain import xbrain_tool`
+3. Generate a function based on the user's description, introduce the appropriate Python packages, and add the @xbrain_tool.Tool decorator to the function;
+4. Generate a corresponding pydantic basemodel based on the function name, logic (or comments), and parameters.
+5. Name a Python file and return it.
 ######
 
-## 返回结果 ##
-返回代码
+## Return Result ##
+Return code
 ######
 
-## 案例 ##
-输入：我两个数相加
+## Example ##
+Input: I want to add two numbers
 
-输出：
+Output:
 add_action.py
 
 from xbrain import xbrain_tool
 class Add(BaseModel):
-    \"\"\"将两个数相加\"\"\"
-    a: int = Field(..., description="第一个数")
-    b: int = Field(..., description="第二个数")
+    \"\"\"Add two numbers\"\"\"
+    a: int = Field(..., description="First number")
+    b: int = Field(..., description="Second number")
 
 @xbrain_tool.Tool(model=Add)
 def add(a: int, b: int) -> int:

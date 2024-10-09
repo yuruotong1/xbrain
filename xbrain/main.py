@@ -11,8 +11,13 @@ def run(messages, chat_model=True, user_prompt=None):
         if chat_model and tool["name"].startswith("XBrain"):
             continue
         else:
-            openai_tools.append(tool["model"])
-    chat_response = chat(messages, tools=openai_tools, user_prompt=user_prompt)
+            openai_tools.append(tool)
+    
+    print("##load actions## \n" + 
+          "\n".join([f"{num}: {tool['name']}" for num, tool in enumerate(openai_tools)]) +
+          "\n"
+          )
+    chat_response = chat(messages, tools=[i["model"] for i in openai_tools], user_prompt=user_prompt)
     if chat_response.content is None:
         res = run_tool(chat_response)
     else:
