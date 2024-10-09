@@ -1,3 +1,18 @@
+<div align="center"><a name="readme-top"></a>
+
+<img src="./image/README/logo.png" width="120" height="120" alt="XBrain">
+<h1>XBrain</h1>
+
+一个开源的函数即智能架构。
+
+ [Issues need help][help-wanted-url]
+
+🎞️[介绍视频](【还在为LangChain操作发愁？XBrain 一步搞定，让函数秒变智能！】 https://www.bilibili.com/video/BV1c52FY4E51/?share_source=copy_web&vd_source=c28e503b050f016c21660b69e391d391)
+
+![](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+
+</div>
+
 ## 适合谁？
 
 ### 您是否面临如下问题？
@@ -38,28 +53,3 @@
 ## 常见问题
 
 1. 如果输入 `xb` 时提示：“'xb' 不是内部或外部命令，也不是可运行的程序或批处理文件”。你需要把python的Scripts目录设置在环境变量下。
-
-## 开发指南
-
-打包成 whl 文件：
-
-```
-py -m pip install --upgrade build
-py -m build
-```
-
-在 `C:\Users\用户名`下的 `.pypirc`文件配置基本信息：
-
-```
-[distutils]
-index-servers = pypi
-[pypi]
-#测试环境
-repository = https://upload.pypi.org/legacy/
-username = __token__
-password = token
-```
-
-上传到官方：
-
-`py -m twine upload dist/*`
