@@ -7,7 +7,7 @@
 
  [Issues need help][help-wanted-url]
 
-🎞️[介绍视频](【还在为LangChain操作发愁？XBrain 一步搞定，让函数秒变智能！】 https://www.bilibili.com/video/BV1c52FY4E51/?share_source=copy_web&vd_source=c28e503b050f016c21660b69e391d391)
+🎞️[介绍视频](https://www.bilibili.com/video/BV1c52FY4E51/?share_source=copy_web&vd_source=c28e503b050f016c21660b69e391d391)
 
 ![](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
