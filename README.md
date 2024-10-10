@@ -4,6 +4,7 @@
 <h1>XBrain</h1>
 
 Chat with XBrain, and it will generate integration code for you without the need to focus on specific details.
+
 简化开发者与大模型对接流程的框架
 
 [🎞️]()[介绍视频](https://www.bilibili.com/video/BV1c52FY4E51/?share_source=copy_web&vd_source=c28e503b050f016c21660b69e391d391)|🗨[English](https://github.com/yuruotong1/xbrain/blob/master/README_EN.md)
