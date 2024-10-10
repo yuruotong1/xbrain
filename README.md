@@ -1,6 +1,9 @@
 <div align="center"><a name="readme-top">
 
-[简化开发者与大模型对接流程的框架]()
+<img src="./image/README/logo.png" width="120" height="120" alt="XBrain">
+<h1>XBrain</h1>
+
+简化开发者与大模型对接流程的框架
 
 [🎞️]()[介绍视频](https://www.bilibili.com/video/BV1c52FY4E51/?share_source=copy_web&vd_source=c28e503b050f016c21660b69e391d391)|🗨[English](https://github.com/yuruotong1/xbrain/blob/master/README_EN.md)
 
