@@ -5,13 +5,11 @@
 
 Chat with XBrain, and it will generate integration code for you without the need to focus on specific details.
 
-简化开发者与大模型对接流程的框架
+极简agent开发框架
 
 [🎞️]()[介绍视频](https://www.bilibili.com/video/BV1c52FY4E51/?share_source=copy_web&vd_source=c28e503b050f016c21660b69e391d391)|🗨[English](https://github.com/yuruotong1/xbrain/blob/master/README_EN.md)
 
 </div>
-
-与xbrain聊天，它就会生成对接代码，无需关注具体细节。
 
 ## ✨特点
 
@@ -19,16 +17,11 @@ Chat with XBrain, and it will generate integration code for you without the need
 * 🔍与xbrain聊天，生成代码并集成进AI。
 * 📦一键部署聊天服务器。
 
-## 🖥竞对是谁？
-
-- LangChain
-- coze
-- dify
 
 ## ⌨️谁会需要？
 
 1. 拥有传统互联网业务的小B公司，希望通过AI扩展新业务；
-2. 掌握python基础语法的开发人员，不懂agent，但希望将功能集成进大模型。
+2. 掌握python基础语法的开发人员，希望将功能集成进大模型。
 
 ## 🍬使用指南
 
