@@ -7,7 +7,7 @@ Chat with XBrain, and it will generate integration code for you without the need
 
 极简agent开发框架
 
-[🎞️]()[介绍视频](https://www.bilibili.com/video/BV1c52FY4E51/?share_source=copy_web&vd_source=c28e503b050f016c21660b69e391d391)|🗨[English](https://github.com/yuruotong1/xbrain/blob/master/README_EN.md)
+📘[详细文档](https://xbrain.notion.site/)|🎞️[介绍视频](https://www.bilibili.com/video/BV1c52FY4E51/?share_source=copy_web&vd_source=c28e503b050f016c21660b69e391d391)|🗨[English](https://github.com/yuruotong1/xbrain/blob/master/README_EN.md)
 
 </div>
 
@@ -17,15 +17,6 @@ Chat with XBrain, and it will generate integration code for you without the need
 * 🔍与xbrain聊天，生成代码并集成进AI。
 * 📦一键部署聊天服务器。
 
-
-## ⌨️谁会需要？
-
-1. 拥有传统互联网业务的小B公司，希望通过AI扩展新业务；
-2. 掌握python基础语法的开发人员，希望将功能集成进大模型。
-
-## 🍬使用指南
-
-使用 `pip install -U pyxbrain`安装最新版本，安装完成后，在命令行输入 `xb` 即可开启对话。
 
 ### 自动分析已有代码，集成进AI
 
