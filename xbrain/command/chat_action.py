@@ -23,7 +23,7 @@ def chat_action():
         if input_str == "exit":
             break
         res = run([{"role": "user", "content": input_str}], chat_model=True)
-        print("chat action result: \n", res)
+        print("##result##\n", res)
 
 def signal_handler(sig, frame):
     print("\nExiting chat mode, looking forward to seeing you again!")

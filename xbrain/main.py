@@ -13,8 +13,8 @@ def run(messages, chat_model=True, user_prompt=None):
         else:
             openai_tools.append(tool)
     
-    print("##load actions## \n" + 
-          "\n".join([f"{num}: {tool['name']}" for num, tool in enumerate(openai_tools)]) +
+    print("##find actions## \n" + 
+          "\n".join([f"{num}: {tool['name']} {tool['path']}" for num, tool in enumerate(openai_tools)]) +
           "\n"
           )
     chat_response = chat(messages, tools=[i["model"] for i in openai_tools], user_prompt=user_prompt)

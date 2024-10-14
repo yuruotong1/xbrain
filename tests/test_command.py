@@ -1,8 +1,9 @@
 import os
 import unittest
-from command import help_action
-from command import change_to_action
+from xbrain.command import help_action
+from xbrain.command import convert_action
 from xbrain import main
+from xbrain.utils.config import Config
 class TestCommand(unittest.TestCase):
     def test_show_command(self):
         res = help_action.show_all_command()
@@ -14,5 +15,5 @@ class TestCommand(unittest.TestCase):
 
     def test_change_to_action(self):
         path = os.getcwd()
-        res = change_to_action.change_to_action(os.path.join(path, ".."))
+        res = convert_action.change_to_action(os.path.join(path, ".."))
         print(res)
