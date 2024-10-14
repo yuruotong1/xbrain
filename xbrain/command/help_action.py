@@ -10,6 +10,8 @@ def show_all_command():
     res = "📜 I can provide the following support, enter the number to use directly or just tell me what you want to do:\n\n"
     number = 1
     for tool in xbrain_tool.tools:
+        if not tool["name"].startswith("XBrain"):
+            continue
         res += f"{number}. {tool['name'].replace('XBrain', '').strip()}: {tool['description']}\n"
         number += 1
     print(res)

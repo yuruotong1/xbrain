@@ -1,10 +1,8 @@
 from xbrain.utils.openai_utils import chat
 from xbrain.xbrain_tool import run_tool, tools
-from xbrain.utils.import_utils import import_action
 
 
 def run(messages, chat_model=True, user_prompt=None):
-    import_action()
     openai_tools = []
     for tool in tools:
         # 如果是 chat 模式，不把内置工具加入到 openai_tools 中

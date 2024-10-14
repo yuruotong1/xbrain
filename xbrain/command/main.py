@@ -2,7 +2,7 @@ from xbrain.main import run
 from xbrain.command.help_action import get_command_map, show_all_command
 import signal
 import sys
-
+from xbrain.utils.import_utils import import_action
 from xbrain.utils.config import Config
 
 def signal_handler(sig, frame):
@@ -19,6 +19,7 @@ def check_config():
         sys.exit(1)
 
 def main():
+    import_action()
     check_config()
     print("Nice to meet you here 👋, I'm xbrain, let's chat!")
     show_all_command()
