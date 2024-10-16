@@ -24,9 +24,3 @@ class ActionRecord:
         self.name = name
         self.context = context
 
-def update_context(action_record:ActionRecord):
-    context[Type.PRE_ACTIONS] = [action_record]
-    context[Type.CURRENT_PATH] = os.getcwd()
-    # 结合PRE_ACTIONS，让AI判断哪些环境变量需要更新，比如用户刚创建完aciton，当前路径可能需要更新
-    context[Type.IS_XBRAIN_PROJECT] = os.path.exists(constant.CONFIG_NAME)
-

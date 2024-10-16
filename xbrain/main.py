@@ -1,8 +1,9 @@
-from xbrain import context
-from xbrain.chat import run
+import json
+from xbrain.chat import prepare_openai_tools, process_chat_response
 from xbrain.command.help_action import get_command_map, show_all_command
 import signal
 import sys
+from xbrain.context import context, ActionRecord
 from xbrain.utils import constant
 from xbrain.context import Type
 from xbrain.utils.import_utils import import_action
@@ -22,12 +23,6 @@ def check_config():
         print(f"base_url should end with `/v1`, current configuration is `{config.OPENAI_BASE_URL}`. Please modify and rerun. Configuration file path:\n{config.config_path}")
         sys.exit(1)
 
-def detect_user_intent():
-    if os.path.exists(constant.CONFIG_NAME):
-        context.set_context(Type.IS_XBRAIN_PROJECT, True)
-    else:
-        context.set_context(Type.IS_XBRAIN_PROJECT, False)
-
 def main():
     import_action()
     check_config()
@@ -36,7 +31,11 @@ def main():
     # 将所有命令映射成数字，如果用户回复了数字且命中，则执行对应命令
     command_map = get_command_map()
     while True:
-        detect_user_intent()
+        ## ----- 更新环境变量，用于AI判断 ----- ##
+        context[Type.CURRENT_PATH] = os.getcwd()
+        # 判断是否是xbrain项目
+        context[Type.IS_XBRAIN_PROJECT] = os.path.exists(constant.CONFIG_NAME)
+        ## ----- 更新环境变量 ----- ##
         show_all_command()
         try:
             input_str = input(">>> ")
@@ -45,7 +44,11 @@ def main():
         if input_str in command_map:
             command_map[input_str]()
         else:
-            res = run([{"role": "user", "content": input_str}], chat_model=False)
+            chat_response = prepare_openai_tools([{"role": "user", "content": input_str}], chat_model=False)
+            # 将所有工具调用记录下来，用于AI预测用户后续行为
+            for tool_call in chat_response.tool_calls:
+                context[Type.PRE_ACTIONS].append(ActionRecord(tool_call.function.name, json.loads(tool_call.function.arguments)))
+            res = process_chat_response(chat_response)
             print(res)
         
 if __name__ == "__main__":
