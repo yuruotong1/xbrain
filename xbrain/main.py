@@ -4,6 +4,7 @@ from xbrain.command.help_action import get_command_map, show_all_command
 import signal
 import sys
 from xbrain.utils import constant
+from xbrain.context import Type
 from xbrain.utils.import_utils import import_action
 from xbrain.utils.config import Config
 import os
@@ -21,7 +22,7 @@ def check_config():
         print(f"base_url should end with `/v1`, current configuration is `{config.OPENAI_BASE_URL}`. Please modify and rerun. Configuration file path:\n{config.config_path}")
         sys.exit(1)
 
-def update_context():
+def detect_user_intent():
     if os.path.exists(constant.CONFIG_NAME):
         context.set_context(Type.IS_XBRAIN_PROJECT, True)
     else:
@@ -35,7 +36,7 @@ def main():
     # 将所有命令映射成数字，如果用户回复了数字且命中，则执行对应命令
     command_map = get_command_map()
     while True:
-        update_context()
+        detect_user_intent()
         show_all_command()
         try:
             input_str = input(">>> ")

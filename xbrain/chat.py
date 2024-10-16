@@ -10,10 +10,6 @@ def run(messages, chat_model=True, user_prompt=None):
             continue
         else:
             openai_tools.append(tool)
-    # print("find actions \n" + 
-    #       "\n".join([f"{num}: {tool['name']} {tool['path']}" for num, tool in enumerate(openai_tools)]) +
-    #       "\n"
-    #       )
     chat_response = chat(messages, tools=[i["model"] for i in openai_tools], user_prompt=user_prompt)
     if chat_response.content is None:
         res = run_tool(chat_response)

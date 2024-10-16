@@ -37,7 +37,7 @@ def run_tool(openai_res):
         tool_func = info["func"]
         run_res = tool_func(**json.loads(tool_call.function.arguments))
         run_res = run_res if run_res is not None else ""
-        print("##run action## \n", 
+        print("run action：\n", 
               "action name: ", tool_call.function.name, "\n",
               "action path: ", info["path"], "\n",
               "action arguments: ", json.loads(tool_call.function.arguments), "\n", 

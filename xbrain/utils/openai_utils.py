@@ -6,14 +6,10 @@ from xbrain.utils.logging_utils import logger
 
 system_prompt = """
 {prompt_user}
-
-## 上下文 ##
-1. 如果用户提到当前文件/当前代码，则指以下内容为当前文件内容作为上下文；
-######
 """
 
 
-def chat(messages, tools=None, user_prompt=None, response_format=None):
+def chat(messages, tools=None, user_prompt="", response_format=None):
     config = Config()
     client = OpenAI(base_url=config.OPENAI_BASE_URL, api_key=config.OPENAI_API_KEY)
     formatted_prompt = system_prompt.format(
