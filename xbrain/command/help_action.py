@@ -7,7 +7,7 @@ class XBrainShowAllCommand(BaseModel):
 
 @xbrain_tool.Tool(model=XBrainShowAllCommand)
 def show_all_command():
-    res = "📜 I can provide the following support, enter the number to use directly or just tell me what you want to do:\n\n"
+    res = "📜 I can provide the following support:\n\n"
     number = 1
     for tool in xbrain_tool.tools:
         if not tool["name"].startswith("XBrain"):

@@ -1,7 +1,7 @@
 from xbrain import xbrain_tool
 from gevent.pywsgi import WSGIServer
 from flask import jsonify
-from xbrain.main import run
+from xbrain.chat import run
 from pydantic import BaseModel, Field
 from typing import List
 from flask_openapi3 import OpenAPI, Info

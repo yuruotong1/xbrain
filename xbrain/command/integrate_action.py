@@ -3,13 +3,12 @@ from xbrain import xbrain_tool
 from xbrain.utils.openai_utils import chat
 import os
 
-class XBrainConvertAction(BaseModel):
-    """Convert function to capability"""
+class XBrainIntegrate(BaseModel):
+    """I want to integrate existing functions into xbrain"""
 
 class GenerateActionResponse(BaseModel):
     """Generate action response"""
     code: str = Field(..., description="Python code")
-
 
 class Func(BaseModel):
     """Function"""
@@ -20,7 +19,7 @@ class ExtractFunctionResponse(BaseModel):
     """Extract function"""
     funcs: list[Func] = Field(..., description="List of functions")
 
-@xbrain_tool.Tool(model=XBrainConvertAction)
+@xbrain_tool.Tool(model=XBrainIntegrate)
 def change_to_action(current_directory: str = ""):
     if not current_directory:
         # Get current directory
@@ -37,15 +36,15 @@ def change_to_action(current_directory: str = ""):
                 py_files.append(relative_path)
                 
     # Print all found .py files
-    print("The following .py files were found, which file would you like to operate on? Please reply with the number\n", "\n".join([f"{index}: {file}" for index, file in enumerate(py_files)]))
-    file_index = input("Please enter the numeric index of the file:")
+    print("The following .py files were found：\n" + "\n".join([f"{index}: {file}" for index, file in enumerate(py_files)]))
+    file_index = input("Which file would you like to operate on? \n>>> ")
     file_name = py_files[int(file_index)]
     print("You have selected the file:", file_name)
     # Get file content
     with open(file_name, 'r', encoding='utf-8') as file:
         file_content = file.read()
         funcs = chat([{"role": "user", "content": file_content}], user_prompt=extract_function_prompt, response_format=ExtractFunctionResponse).parsed
-        func_index = input("The following functions have been extracted, which function would you like to convert? Please reply with the number\n" + \
+        func_index = input("Which function would you like to convert? \n" + \
                            "\n".join([f"{index}: {func.name} \"{func.description}\"" for index, func in enumerate(funcs.funcs)]) + "\n>>> ")
         chat_content = "Please convert the following code's " + \
             funcs.funcs[int(func_index)].name + " function:\n\n" + \

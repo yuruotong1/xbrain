@@ -1,8 +1,7 @@
 from xbrain import xbrain_tool
 from pydantic import BaseModel
 import signal
-from xbrain.main import run
-from xbrain.utils.import_utils import import_action
+from xbrain.chat import run
 
 class XBrainChatAction(BaseModel):
     """Test capabilities"""

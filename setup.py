@@ -20,7 +20,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'xb = xbrain.command.main:main',
+            'xb = xbrain.main:main',
         ],
     },
 )

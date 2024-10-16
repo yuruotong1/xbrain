@@ -2,8 +2,8 @@ import os
 from xbrain import xbrain_tool
 from pydantic import BaseModel, Field
 from xbrain.utils.openai_utils import chat
-
-class XBrainCreateAction(BaseModel):
+from xbrain.context import Type
+class XBrainCreate(BaseModel):
     """Create capability"""
     pass
 
@@ -12,10 +12,10 @@ class GenerateActionResponse(BaseModel):
     py_name: str = Field(..., description="Python file name")
     code: str = Field(..., description="Python code")
 
-@xbrain_tool.Tool(model=XBrainCreateAction)
+@xbrain_tool.Tool(model=XBrainCreate, hit_condition = {Type.IS_XBRAIN_PROJECT: True})
 def create_action():
-    action_description = input("What is the action for:\n")
-    print("##Generating function##")
+    action_description = input("Please tell me, the action you want to do?\n>>> ")
+    print("Please wait a moment, I'm generating the code for you...")
     res = chat([{"role": "user", "content": action_description}], user_prompt=prompt, response_format=GenerateActionResponse)
     if res.parsed:
         current_directory = os.getcwd()
@@ -23,7 +23,7 @@ def create_action():
         code = res.parsed.code.strip().replace("```python", "").replace("```", "")
         with open(file_path, 'w', encoding='utf-8') as file:
             file.write(code)
-        print("Creation successful, file generated:", file_path)
+        print("Creation successful!\nfile generated: ", file_path)
     else:
         print("Parsing failed")
 

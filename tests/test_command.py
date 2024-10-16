@@ -1,8 +1,8 @@
 import os
 import unittest
 from xbrain.command import help_action
-from xbrain.command import convert_action
-from xbrain import main
+from xbrain.command import integrate_action
+from xbrain import chat
 from xbrain.utils.config import Config
 class TestCommand(unittest.TestCase):
     def test_show_command(self):
@@ -10,10 +10,10 @@ class TestCommand(unittest.TestCase):
         print(res)
 
     def test_run_command(self):
-        res = main.run([{"role": "user", "content": "展示所有命令"}])
+        res = chat.run([{"role": "user", "content": "展示所有命令"}])
         print(res)
 
     def test_change_to_action(self):
         path = os.getcwd()
-        res = convert_action.change_to_action(os.path.join(path, ".."))
+        res = integrate_action.change_to_action(os.path.join(path, ".."))
         print(res)
