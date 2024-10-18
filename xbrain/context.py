@@ -20,7 +20,9 @@ context = {
         }
 
 # 判断是否命中条件
-def is_hit(hit_condition:dict):
+def is_hit(hit_condition):
+    if hit_condition is None:
+        return True
     for condition in hit_condition:
         if context[condition] != hit_condition[condition]:
             return False
@@ -31,8 +33,6 @@ class ActionRecord:
         self.name = name
         self.params = params
 
-def update_context(action_record:ActionRecord):
-    context[Type.PRE_ACTIONS] = [action_record]
+def update_context():
     context[Type.CURRENT_PATH] = os.getcwd()
-    # 结合PRE_ACTIONS，让AI判断哪些环境变量需要更新，比如用户刚创建完aciton，当前路径可能需要更新
     context[Type.IS_XBRAIN_PROJECT] = os.path.exists(constant.CONFIG_NAME)

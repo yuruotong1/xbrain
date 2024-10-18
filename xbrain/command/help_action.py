@@ -11,11 +11,10 @@ def show_all_command():
     res = "I guess you want to do the following, or chat with me:\n\n"
     number = 1
     for tool in xbrain_tool.tools:
-        if not tool["name"].startswith("XBrain") or \
-            not is_hit(tool["hit_condition"]) or \
-            not tool["name"].startswith("XBrainShowAllCommand"):
+        if not is_hit(tool["hit_condition"]) or \
+            tool["name"].startswith("XBrainShowAllCommand"):
             continue
-        res += f"{number}. {tool['name'].replace('XBrain', '').strip()}: {tool['description']}\n"
+        res += f"{number}. {tool['description']}\n"
         number += 1
     print(res)
 

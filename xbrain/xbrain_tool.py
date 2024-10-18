@@ -5,7 +5,7 @@ from xbrain.context import context, Type, ActionRecord, is_hit
 tools = []
 
 class Tool:
-    def __init__(self, model, hit_condition):
+    def __init__(self, model, hit_condition=None):
         self.model = model
         self.hit_condition = hit_condition
 

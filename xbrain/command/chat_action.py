@@ -4,7 +4,7 @@ import signal
 from xbrain.chat import run
 
 class XBrainChatAction(BaseModel):
-    """Test capabilities"""
+    """I want to chat with my action"""
     pass
 
 @xbrain_tool.Tool(model=XBrainChatAction)

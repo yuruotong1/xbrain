@@ -1,7 +1,6 @@
 from xbrain.utils.config import Config
 from openai import OpenAI
 import openai
-from xbrain.utils.logging_utils import logger
 
 
 system_prompt = """
@@ -23,6 +22,5 @@ def chat(messages, tools=None, user_prompt="", response_format=None):
         **({"response_format": response_format} if response_format is not None else {}),
         **({"tools": [openai.pydantic_function_tool(tool) for tool in tools]} if tools is not None else {}),
     )
-    logger.info(f"openai response: {response.choices[0].message}")
     message = response.choices[0].message
     return message
