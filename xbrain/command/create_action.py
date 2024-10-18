@@ -4,7 +4,7 @@ from pydantic import BaseModel, Field
 from xbrain.utils.openai_utils import chat
 from xbrain.context import Type
 class XBrainCreate(BaseModel):
-    """Create capability"""
+    """create a new action"""
     pass
 
 class GenerateActionResponse(BaseModel):

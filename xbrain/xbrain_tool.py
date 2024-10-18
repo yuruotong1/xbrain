@@ -1,7 +1,7 @@
 import openai
 import json
 import os
-from xbrain.context import context, Type, ActionRecord, is_hit
+from xbrain.context import context, Type, ActionRecord
 tools = []
 
 class Tool:
@@ -12,6 +12,12 @@ class Tool:
     def __call__(self, func):
         # 利用 openai 官方的转换函数，提取 name
         function = openai.pydantic_function_tool(self.model)
+        # 删除已经导入的工具
+        for tool in tools:
+            if tool["name"] == function["function"]["name"] and \
+               tool["path"] == os.path.relpath(func.__code__.co_filename):
+                tools.remove(tool)
+                break
         tools.append({
             "name": function["function"]["name"],
             "description": function["function"].get("description", ""),
@@ -20,7 +26,7 @@ class Tool:
             "func": func,
             "path": os.path.relpath(func.__code__.co_filename)
         })
-
+        print("appendtools: ",function["function"]["name"])
         def wrapper(*args, **kwargs):
             result = func(*args, **kwargs)
             return result

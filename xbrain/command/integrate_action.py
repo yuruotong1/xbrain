@@ -1,10 +1,11 @@
 from pydantic import BaseModel, Field
 from xbrain import xbrain_tool
+from xbrain.context import Type
 from xbrain.utils.openai_utils import chat
 import os
 
 class XBrainIntegrate(BaseModel):
-    """I want to integrate existing functions into xbrain"""
+    """integrate existing functions into xbrain"""
 
 class GenerateActionResponse(BaseModel):
     """Generate action response"""
@@ -19,7 +20,7 @@ class ExtractFunctionResponse(BaseModel):
     """Extract function"""
     funcs: list[Func] = Field(..., description="List of functions")
 
-@xbrain_tool.Tool(model=XBrainIntegrate)
+@xbrain_tool.Tool(model=XBrainIntegrate, hit_condition={Type.IS_XBRAIN_PROJECT: True})
 def change_to_action(current_directory: str = ""):
     if not current_directory:
         # Get current directory
@@ -36,18 +37,18 @@ def change_to_action(current_directory: str = ""):
                 py_files.append(relative_path)
                 
     # Print all found .py files
-    print("The following .py files were found：\n" + "\n".join([f"{index}: {file}" for index, file in enumerate(py_files)]))
-    file_index = input("Which file would you like to operate on? \n>>> ")
-    file_name = py_files[int(file_index)]
+    print("The following .py files were found：\n" + "\n".join([f"{index + 1}: {file}" for index, file in enumerate(py_files)]))
+    file_index = input("\nWhich file would you like to operate on? \n>>> ")
+    file_name = py_files[int(file_index) - 1]
     print("You have selected the file:", file_name)
     # Get file content
     with open(file_name, 'r', encoding='utf-8') as file:
         file_content = file.read()
         funcs = chat([{"role": "user", "content": file_content}], user_prompt=extract_function_prompt, response_format=ExtractFunctionResponse).parsed
         func_index = input("Which function would you like to convert? \n" + \
-                           "\n".join([f"{index}: {func.name} \"{func.description}\"" for index, func in enumerate(funcs.funcs)]) + "\n>>> ")
+                           "\n".join([f"{index+1}: {func.name} \"{func.description}\"" for index, func in enumerate(funcs.funcs)]) + "\n>>> ")
         chat_content = "Please convert the following code's " + \
-            funcs.funcs[int(func_index)].name + " function:\n\n" + \
+            funcs.funcs[int(func_index) - 1].name + " function:\n\n" + \
             file_content
         res = chat([{"role": "user", "content": chat_content}], user_prompt=prompt, response_format=GenerateActionResponse)
         if res.parsed:

@@ -4,12 +4,10 @@ from xbrain.command.help_action import get_command_map, show_all_command
 import signal
 import sys
 from xbrain.context import context, ActionRecord
-from xbrain.utils import constant
 from xbrain.context import Type
-from xbrain.utils.import_utils import import_action
 from xbrain.utils.config import Config
-import os
 from xbrain.context import update_context
+from xbrain.utils.import_utils import import_action
 
 def signal_handler(sig, frame):
     print("Nice to meet you here!")
@@ -26,16 +24,16 @@ def check_config():
 
 
 def main():    
-    import_action()
     check_config()
     # 捕获 Ctrl + C 信号，进行更优雅的退出
     signal.signal(signal.SIGINT, signal_handler)
-    # 将所有命令映射成数字，如果用户回复了数字且命中，则执行对应命令
-    command_map = get_command_map()
+    import_action()
     while True:
         # 更新环境变量
         update_context()
         show_all_command()
+        # 将所有命令映射成数字，如果用户回复了数字且命中，则执行对应命令
+        command_map = get_command_map()
         try:
             input_str = input(">>> ")
         except EOFError:

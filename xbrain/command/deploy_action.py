@@ -58,7 +58,7 @@ def chat(body: ChatRequestBody):
     return jsonify({"status": "success", "choices": [{"message": {"role": "assistant", "content": res}}]})
 
 class XBrainDeploy(BaseModel):
-    """Deploy capabilities as a service"""
+    """deploy a chat server"""
     pass
 
 @xbrain_tool.Tool(model=XBrainDeploy, hit_condition={Type.IS_XBRAIN_PROJECT: True})

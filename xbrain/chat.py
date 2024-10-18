@@ -1,8 +1,9 @@
+from xbrain.utils.import_utils import import_action
 from xbrain.utils.openai_utils import chat
 from xbrain.xbrain_tool import run_tool, tools
 
 
-def prepare_openai_tools(chat_model, messages, user_prompt):
+def prepare_openai_tools(messages, user_prompt, chat_model):
     openai_tools = []
     for tool in tools:
         # 如果是 chat 模式，不把内置工具加入到 openai_tools 中
@@ -21,5 +22,7 @@ def process_chat_response(chat_response):
     return "\n".join(map(str, res)) if isinstance(res, list) else res
 
 def run(messages, chat_model=True, user_prompt=None):
-    chat_response = prepare_openai_tools(chat_model, messages, user_prompt)
+    if chat_model:
+        import_action()
+    chat_response = prepare_openai_tools(messages, user_prompt, chat_model)
     return process_chat_response(chat_response)

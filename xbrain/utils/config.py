@@ -13,7 +13,6 @@ class Config:
 
 
     def load_config(self):
-        
         if not os.path.exists(self.config_path):
             # 如果文件不存在，创建文件并写入默认配置
             default_config = {
