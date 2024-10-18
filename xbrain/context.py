@@ -19,10 +19,17 @@ context = {
             Type.IS_XBRAIN_PROJECT: False
         }
 
+# 判断是否命中条件
+def is_hit(hit_condition:dict):
+    for condition in hit_condition:
+        if context[condition] != hit_condition[condition]:
+            return False
+    return True
+
 class ActionRecord:
-    def __init__(self, name, context):
+    def __init__(self, name, params):
         self.name = name
-        self.context = context
+        self.params = params
 
 def update_context(action_record:ActionRecord):
     context[Type.PRE_ACTIONS] = [action_record]

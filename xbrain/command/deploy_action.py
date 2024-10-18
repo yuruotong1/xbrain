@@ -8,6 +8,8 @@ from flask_openapi3 import OpenAPI, Info
 from flask import jsonify
 from pydantic import BaseModel, Field, ValidationError
 
+from xbrain.context import Type
+
 
 class ChatMessage(BaseModel):
     role: str = Field(..., description="Role, can only be 'assistant' or 'user'", examples=["user", "assistant"], json_schema_extra={"enum": ["assistant", "user"]})
@@ -59,7 +61,7 @@ class XBrainDeploy(BaseModel):
     """Deploy capabilities as a service"""
     pass
 
-@xbrain_tool.Tool(model=XBrainDeploy)
+@xbrain_tool.Tool(model=XBrainDeploy, hit_condition={Type.IS_XBRAIN_PROJECT: True})
 def deploy():
     port = 8001
     print(f"Service started, chat at: http://127.0.0.1:{port}/chat")

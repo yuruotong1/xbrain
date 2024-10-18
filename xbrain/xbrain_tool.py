@@ -1,11 +1,13 @@
 import openai
 import json
 import os
+from xbrain.context import context, Type, ActionRecord, is_hit
 tools = []
 
 class Tool:
-    def __init__(self, model):
+    def __init__(self, model, hit_condition):
         self.model = model
+        self.hit_condition = hit_condition
 
     def __call__(self, func):
         # 利用 openai 官方的转换函数，提取 name
@@ -13,6 +15,7 @@ class Tool:
         tools.append({
             "name": function["function"]["name"],
             "description": function["function"].get("description", ""),
+            "hit_condition": self.hit_condition,
             "model": self.model,
             "func": func,
             "path": os.path.relpath(func.__code__.co_filename)
@@ -43,6 +46,7 @@ def run_tool(openai_res):
               "action arguments: ", json.loads(tool_call.function.arguments), "\n", 
               "action result: ", run_res, "\n\n"
               )
-        
+        # 存储到上下文中
+        context[Type.PRE_ACTIONS].append(ActionRecord(tool_call.function.name, json.loads(tool_call.function.arguments)))
         res.append(run_res)
     return res
