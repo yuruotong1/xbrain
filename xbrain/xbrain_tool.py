@@ -15,7 +15,7 @@ class Tool:
         # 删除已经导入的工具
         for tool in tools:
             if tool["name"] == function["function"]["name"] and \
-               tool["path"] == os.path.relpath(func.__code__.co_filename):
+               tool["path"] == func.__code__.co_filename:
                 tools.remove(tool)
                 break
         tools.append({
@@ -24,9 +24,8 @@ class Tool:
             "hit_condition": self.hit_condition,
             "model": self.model,
             "func": func,
-            "path": os.path.relpath(func.__code__.co_filename)
+            "path": func.__code__.co_filename
         })
-        print("appendtools: ",function["function"]["name"])
         def wrapper(*args, **kwargs):
             result = func(*args, **kwargs)
             return result

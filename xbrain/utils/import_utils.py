@@ -10,12 +10,9 @@ def import_action():
     current_dirs = [os.getcwd()]
      # 动态导入官方模块
     official_module = importlib.import_module('xbrain.command')
-    print("official_module: ", official_module)
     current_dirs.append(os.path.dirname(official_module.__file__))
     for current_dir in current_dirs:
-        print("current_dir: ", current_dir)
         for root, dirs, files in os.walk(current_dir):
-            print("files: ", files)
             if is_venv_dir(root):
                 dirs[:] = []  # 清空 dirs 列表，避免进入虚拟环境目录的子目录
                 continue

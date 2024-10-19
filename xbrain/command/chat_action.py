@@ -3,7 +3,6 @@ from pydantic import BaseModel
 import signal
 from xbrain.chat import run
 from xbrain.context import Type
-print("chat_action")
 class XBrainChatAction(BaseModel):
     """chat with my action"""
     pass
