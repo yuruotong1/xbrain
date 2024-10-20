@@ -1,6 +1,6 @@
 ---
 name: '报告Bug 🐛'
-about: 报告 @yuruotong1/autoMate 的 bug
+about: 报告 xbrain 的 bug
 title: '🐛[BUG]'
 labels: '🐛 BUG'
 assignees: ''
