@@ -20,9 +20,13 @@ def import_action():
                 if file.endswith('.py') and file not in ['__init__.py', 'setup.py']:
                     module_name = file[:-3]
                     module_path = os.path.join(root, file)
+                    # 如果文件中没有 @xbrain_tool.Tool'
+                    with open(module_path, 'r', encoding='utf-8') as f:
+                        content = f.read()
+                        if '@xbrain_tool.Tool' not in content:
+                            continue  
                     # 动态导入模块
                     run_module(module_name, module_path)
-
 def run_module(module_name, module_path):
      # 动态导入模块
     spec = importlib.util.spec_from_file_location(module_name, module_path)

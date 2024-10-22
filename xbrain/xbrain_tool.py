@@ -15,7 +15,7 @@ class Tool:
         # 删除已经导入的工具
         for tool in tools:
             if tool["name"] == function["function"]["name"] and \
-               tool["path"] == func.__code__.co_filename:
+               os.path.samefile(tool["path"], func.__code__.co_filename):
                 tools.remove(tool)
                 break
         tools.append({
