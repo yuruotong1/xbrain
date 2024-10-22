@@ -17,7 +17,7 @@ def import_action():
                 dirs[:] = []  # 清空 dirs 列表，避免进入虚拟环境目录的子目录
                 continue
             for file in files:
-                if file.endswith('.py') and file != '__init__.py':
+                if file.endswith('.py') and file not in ['__init__.py', 'setup.py']:
                     module_name = file[:-3]
                     module_path = os.path.join(root, file)
                     # 动态导入模块

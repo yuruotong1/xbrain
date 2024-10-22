@@ -23,7 +23,7 @@ def check_config():
         sys.exit(1)
 
 
-def main():    
+def main(): 
     check_config()
     # 捕获 Ctrl + C 信号，进行更优雅的退出
     signal.signal(signal.SIGINT, signal_handler)
