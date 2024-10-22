@@ -5,3 +5,4 @@ dist
 config.yaml
 *.log
 **/__pycache__
+**/temp
