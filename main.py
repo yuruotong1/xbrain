@@ -1,4 +1,5 @@
 import json
+import os
 from xbrain.chat import prepare_openai_tools, process_chat_response
 from xbrain.command.help_action import get_command_map, show_all_command
 import signal
@@ -27,6 +28,10 @@ def main():
     check_config()
     # 捕获 Ctrl + C 信号，进行更优雅的退出
     signal.signal(signal.SIGINT, signal_handler)
+    path = input(f"Current workspace: \n\033[;32m{os.getcwd()}\033[0m\nif you want to change workspace, please input the path or enter to continue:\n>>> ")
+    if path:
+        os.chdir(path)
+        print(f"change to workspace: \n\033[;32m{os.getcwd()}\033[0m")
     import_action()
     while True:
         # 更新环境变量

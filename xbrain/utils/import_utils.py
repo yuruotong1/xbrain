@@ -1,16 +1,13 @@
 import os
 import importlib
 import sys
-from xbrain.xbrain_tool import tools
+from xbrain.xbrain_tool import clear_tools, tools
 
 def import_action():
     # 清空已有模块
-    tools.clear()
+    clear_tools()
     # 动态导入用户模块
     current_dirs = [os.getcwd()]
-     # 动态导入官方模块
-    official_module = importlib.import_module('xbrain.command')
-    current_dirs.append(os.path.dirname(official_module.__file__))
     for current_dir in current_dirs:
         for root, dirs, files in os.walk(current_dir):
             if is_venv_dir(root):

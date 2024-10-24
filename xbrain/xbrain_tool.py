@@ -55,3 +55,8 @@ def run_tool(openai_res):
         context[Type.PRE_ACTIONS].append(ActionRecord(tool_call.function.name, json.loads(tool_call.function.arguments)))
         res.append(run_res)
     return res
+
+
+def clear_tools():
+    global tools
+    tools = [tool for tool in tools if tool['name'].startswith('XBrain')]
