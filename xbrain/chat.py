@@ -24,5 +24,7 @@ def process_chat_response(chat_response):
 def run(messages, chat_model=True, user_prompt=None):
     if chat_model:
         import_action()
+    from xbrain.xbrain_tool import tools
+    print(tools)
     chat_response = prepare_openai_tools(messages, user_prompt, chat_model)
     return process_chat_response(chat_response)
