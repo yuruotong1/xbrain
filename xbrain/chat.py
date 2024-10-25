@@ -1,11 +1,12 @@
 from xbrain.utils.import_utils import import_action
 from xbrain.utils.openai_utils import chat
-from xbrain.xbrain_tool import run_tool, tools
+from xbrain.xbrain_tool import run_tool
+import xbrain.xbrain_tool as xb_tool
 
 
 def prepare_openai_tools(messages, user_prompt, chat_model):
     openai_tools = []
-    for tool in tools:
+    for tool in xb_tool.tools:
         # 如果是 chat 模式，不把内置工具加入到 openai_tools 中
         if chat_model and tool["name"].startswith("XBrain"):
             continue
@@ -24,8 +25,5 @@ def process_chat_response(chat_response):
 def run(messages, chat_model=True, user_prompt=None):
     if chat_model:
         import_action()
-    from xbrain.xbrain_tool import tools
-    # todo 这里为什么没有导入用户的 tools
-    print(tools)
     chat_response = prepare_openai_tools(messages, user_prompt, chat_model)
     return process_chat_response(chat_response)

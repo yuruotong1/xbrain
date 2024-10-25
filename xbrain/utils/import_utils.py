@@ -24,7 +24,6 @@ def import_action():
                             continue  
                     # 动态导入模块
                     run_module(module_name, module_path)
-    print(tools)
 
 def run_module(module_name, module_path):
      # 动态导入模块
