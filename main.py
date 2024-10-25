@@ -46,7 +46,7 @@ def main():
         if input_str in command_map:
             command_map[input_str]()
         else:
-            chat_response = prepare_openai_tools([{"role": "user", "content": input_str}], chat_model=False)
+            chat_response = prepare_openai_tools([{"role": "user", "content": input_str}],user_prompt=None, chat_model=False)
             # 将所有工具调用记录下来，用于AI预测用户后续行为
             for tool_call in chat_response.tool_calls:
                 context[Type.PRE_ACTIONS].append(ActionRecord(tool_call.function.name, json.loads(tool_call.function.arguments)))

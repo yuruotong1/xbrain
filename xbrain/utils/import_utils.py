@@ -1,7 +1,7 @@
 import os
 import importlib
 import sys
-from xbrain.xbrain_tool import clear_tools
+from xbrain.xbrain_tool import clear_tools,tools
 
 def import_action():
     # 清空已有模块
@@ -24,6 +24,7 @@ def import_action():
                             continue  
                     # 动态导入模块
                     run_module(module_name, module_path)
+    print(tools)
 
 def run_module(module_name, module_path):
      # 动态导入模块

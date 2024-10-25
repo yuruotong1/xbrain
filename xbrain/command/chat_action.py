@@ -21,7 +21,7 @@ def chat_action():
             break
         if input_str == "exit":
             break
-        res = run([{"role": "user", "content": input_str}], chat_model=True)
+        res = run([{"role": "user", "content": input_str}], user_prompt=None, chat_model=True)
         print(res)
 
 def signal_handler(sig, frame):
