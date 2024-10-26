@@ -1,6 +1,7 @@
 from pydantic import Field
 from xbrain.utils.config import Config
-from openai import BaseModel, OpenAI
+from pydantic import BaseModel
+from openai import OpenAI
 import openai
 
 from xbrain.utils.input_util import get_input

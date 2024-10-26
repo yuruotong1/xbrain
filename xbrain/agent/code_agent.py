@@ -1,21 +1,20 @@
 import os
 from typing import List
 from pydantic import BaseModel, Field
-from xbrain.agent import AgentBase
-from xbrain.agent import chat
+from xbrain.agent.agent_base import AgentBase
+from xbrain.utils.openai_utils import chat
 
 class CodeAgent(AgentBase):
     def run(self, requirement: str):
-        res = chat([{"role": "user", "content": requirement}], system_prompt=prompt, response_format=WorkflowModel)
-        if res.parsed:
-            current_directory = os.getcwd()
-            file_path = os.path.join(current_directory, res.parsed.py_name)
-            code = res.parsed.code.strip().replace("```python", "").replace("```", "")
-            with open(file_path, 'w', encoding='utf-8') as file:
-                file.write(code)
-            print("Creation successful!\nfile generated: ", file_path)
-        else:
-            print("Parsing failed")
+        res = chat([{"role": "user", "content": requirement}], system_prompt=prompt, response_format=WorkflowModel) 
+        current_directory = os.getcwd()
+        file_path = os.path.join(current_directory, res.parsed.py_name)
+        code = res.parsed.code.strip().replace("```python", "").replace("```", "")
+        with open(file_path, 'w', encoding='utf-8') as file:
+            file.write(code)
+        print("Creation successful!\nfile generated: ", file_path)
+        return res.parsed
+        
 
 class WorkflowModel(BaseModel):
     """Response for generating an action"""

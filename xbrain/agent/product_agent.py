@@ -1,4 +1,4 @@
-from openai import BaseModel, Field
+from pydantic import BaseModel, Field
 from xbrain.agent.agent_base import AgentBase
 from xbrain.utils.openai_utils import chat, multiple_rounds_chat
 
