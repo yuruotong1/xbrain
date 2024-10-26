@@ -12,7 +12,7 @@ def prepare_openai_tools(messages, user_prompt, chat_model):
             continue
         else:
             openai_tools.append(tool)
-    chat_response = chat(messages, tools=[i["model"] for i in openai_tools], user_prompt=user_prompt)
+    chat_response = chat(messages, tools=[i["model"] for i in openai_tools], system_prompt=user_prompt)
     return chat_response
 
 def process_chat_response(chat_response):

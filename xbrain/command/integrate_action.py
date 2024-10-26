@@ -44,13 +44,13 @@ def change_to_action(current_directory: str = ""):
     # Get file content
     with open(file_name, 'r', encoding='utf-8') as file:
         file_content = file.read()
-        funcs = chat([{"role": "user", "content": file_content}], user_prompt=extract_function_prompt, response_format=ExtractFunctionResponse).parsed
+        funcs = chat([{"role": "user", "content": file_content}], system_prompt=extract_function_prompt, response_format=ExtractFunctionResponse).parsed
         func_index = input("Which function would you like to convert? \n" + \
                            "\n".join([f"{index+1}: {func.name} \"{func.description}\"" for index, func in enumerate(funcs.funcs)]) + "\n>>> ")
         chat_content = "Please convert the following code's " + \
             funcs.funcs[int(func_index) - 1].name + " function:\n\n" + \
             file_content
-        res = chat([{"role": "user", "content": chat_content}], user_prompt=prompt, response_format=GenerateActionResponse)
+        res = chat([{"role": "user", "content": chat_content}], system_prompt=prompt, response_format=GenerateActionResponse)
         if res.parsed:
             code = res.parsed.code.strip().replace("```python", "").replace("```", "")
             with open(file_name, 'w', encoding='utf-8') as file:

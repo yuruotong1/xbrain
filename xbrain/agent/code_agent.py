@@ -1,36 +1,30 @@
 import os
-from xbrain import xbrain_tool
+from typing import List
 from pydantic import BaseModel, Field
-from xbrain.utils.openai_utils import chat
-from xbrain.context import Type
-class XBrainCreate(BaseModel):
-    """create a new action"""
-    pass
+from xbrain.agent import AgentBase
+from xbrain.agent import chat
 
-class GenerateActionResponse(BaseModel):
+class CodeAgent(AgentBase):
+    def run(self, requirement: str):
+        res = chat([{"role": "user", "content": requirement}], system_prompt=prompt, response_format=WorkflowModel)
+        if res.parsed:
+            current_directory = os.getcwd()
+            file_path = os.path.join(current_directory, res.parsed.py_name)
+            code = res.parsed.code.strip().replace("```python", "").replace("```", "")
+            with open(file_path, 'w', encoding='utf-8') as file:
+                file.write(code)
+            print("Creation successful!\nfile generated: ", file_path)
+        else:
+            print("Parsing failed")
+
+class WorkflowModel(BaseModel):
     """Response for generating an action"""
     py_name: str = Field(..., description="Python file name")
+    third_party_dependencies: List[str] = Field(description="third-party dependencies")
     code: str = Field(..., description="Python code")
 
-@xbrain_tool.Tool(model=XBrainCreate, hit_condition = {Type.IS_XBRAIN_PROJECT: True})
-def create_action():
-    action_description = input("Please tell me, the action you want to do?\n>>> ")
-    print("Please wait a moment, I'm generating the code for you...")
-    res = chat([{"role": "user", "content": action_description}], system_prompt=prompt, response_format=GenerateActionResponse)
-    if res.parsed:
-        current_directory = os.getcwd()
-        file_path = os.path.join(current_directory, res.parsed.py_name)
-        code = res.parsed.code.strip().replace("```python", "").replace("```", "")
-        with open(file_path, 'w', encoding='utf-8') as file:
-            file.write(code)
-        print("Creation successful!\nfile generated: ", file_path)
-    else:
-        print("Parsing failed")
-
-
-
 prompt = """
-## Objective ##
+# Objective ##
 You are a code assistant responsible for converting user requirements into actions. You need to do the following:
 
 1. Fully understand the user's requirements and convert them into an action.
@@ -38,10 +32,7 @@ You are a code assistant responsible for converting user requirements into actio
 3. Generate a function based on the user's description, introduce the appropriate Python packages, and add the @xbrain_tool.Tool decorator to the function;
 4. Generate a corresponding pydantic basemodel based on the function name, logic (or comments), and parameters.
 5. Name a Python file and return it.
-######
-
-## Return Result ##
-Return code
+6. If the code has dependencies on third-party libraries, please return the libraries that need to be installed.
 ######
 
 ## Example ##
@@ -63,4 +54,3 @@ def add(a: int, b: int) -> int:
     \"\"\"
     return a + b
 """
-    
