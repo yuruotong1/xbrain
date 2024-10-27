@@ -3,9 +3,7 @@
 <img src="./image/README/logo.png" width="120" height="120" alt="XBrain">
 <h1>XBrain</h1>
 
-Chat with XBrain, and it will generate integration code for you without the need to focus on specific details.
-
-xbrain是一个AI漏斗。
+xbrain是一个AI漏斗，把巨量用户行为模式映射到少量特定入口。
 
 📘[详细文档](https://xbrain.notion.site/)|🎞️[介绍视频](https://www.bilibili.com/video/BV1c52FY4E51/?share_source=copy_web&vd_source=c28e503b050f016c21660b69e391d391)|🗨[English](https://github.com/yuruotong1/xbrain/blob/master/README_EN.md)
 
@@ -13,9 +11,8 @@ xbrain是一个AI漏斗。
 
 ## ✨特点
 
-xbrain是一个AI漏斗，把巨量用户行为模式映射到少量特定入口，xbrain用户定义入口，xbrain来做映射。
-
-**我们做了什么？**其核心就是function call，我们把任何一个Python函数、OpenAPI、Json/Yaml描述都能够接到openai的function call中，被openai调用。在这里面xbrain屏蔽了提示词，让用户只专注于业务开发。
+1. 屏蔽了提示词，让用户专注于业务开发：用户无需编写提示词，就能开发大模型应用；
+2. 用自然语言开发function call：通过自然语言将本地的python代码接入到openai的function call。
 
 
 ## 文档
@@ -26,7 +23,7 @@ xbrain是一个AI漏斗，把巨量用户行为模式映射到少量特定入口
 
 ## **几个有意思的例子**
 
-# 将加减操作漏斗成两数相加
+# 将任何加减操作映射成两数相加
 
 通过xb定义一个加法函数：
 
