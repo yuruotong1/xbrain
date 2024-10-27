@@ -1,6 +1,6 @@
 @echo off
 
-REM 1. 在用户根目录创建xbrain文件夹
+@REM 1. 在用户根目录创建xbrain文件夹
 cd %HOMEPATH%
 if not exist xbrain (
     mkdir xbrain
@@ -9,7 +9,7 @@ if not exist xbrain (
     echo xbrain folder already exists.
 )
 
-REM 2. 检查系统Python版本是否大于3.8
+@REM 2. 检查系统Python版本是否大于3.8
 for /f "tokens=2 delims= " %%i in ('python --version 2^>^&1') do set PYTHON_VERSION=%%i
 for /f "tokens=1,2 delims=." %%a in ("%PYTHON_VERSION%") do (
     set PYTHON_MAJOR=%%a
@@ -28,7 +28,7 @@ if %PYTHON_MAJOR% GEQ 3 (
     exit /b 1
 )
 
-REM 3. 在xbrain文件夹中创建Python虚拟环境
+@REM 3. 在xbrain文件夹中创建Python虚拟环境
 cd %HOMEPATH%\xbrain
 if not exist ".venv" (
     python -m venv .venv
@@ -37,22 +37,22 @@ if not exist ".venv" (
     echo Virtual environment already exists. Skipping creation.
 )
 
-REM 4. 激活虚拟环境
+@REM 4. 激活虚拟环境
 call .venv\Scripts\activate
 echo Virtual environment activated.
 
-REM 5. 更新pip
+@REM 5. 更新pip
 python -m pip install --upgrade pip --default-timeout=999
 echo pip upgraded.
 
-REM 6. 安装pyxbrain
+@REM 6. 安装pyxbrain
 pip install -U pyxbrain --default-timeout=999
 echo pyxbrain installed.
 
-REM 7. 将 pyxbrain 添加到环境变量
+@REM 7. 将 pyxbrain 添加到环境变量
 setx PATH "%PATH%;%HOMEPATH%\xbrain\.venv\Scripts"
 echo pyxbrain added to environment variables.
 
-REM 8. 运行xb
+@REM 8. 运行xb
 echo running xbrain
 xb
