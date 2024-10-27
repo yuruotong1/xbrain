@@ -1,6 +1,5 @@
 import json
 import os
-import subprocess
 from xbrain.chat import prepare_openai_tools, process_chat_response
 from xbrain.command.help_action import get_command_map, show_all_command
 import signal
@@ -56,7 +55,5 @@ def main():
             print(res)
         
 if __name__ == "__main__":
-    # main()
-    # _wrapper(["install", "requests"])
-    # pip_main(["install", "requests", "--force-reinstall"])
-    subprocess.run(["python", "-m", "pip", "install", "requests", "--force-reinstall"])
+    main()
+  

@@ -16,15 +16,15 @@ fi
 
 # 3. 在xbrain文件夹中创建Python虚拟环境
 cd ~/xbrain
-if [[ ! -d ".xbrain" ]]; then
-    python3 -m venv .xbrain
-    echo "Python virtual environment created in ~/xbrain/.xbrain."
+if [[ ! -d ".venv" ]]; then
+    python3 -m venv .venv
+    echo "Python virtual environment created in ~/xbrain/.venv."
 else
     echo "Virtual environment already exists. Skipping creation."
 fi
 
 # 4. 激活虚拟环境
-source .xbrain/bin/activate
+source .venv/bin/activate
 echo "Virtual environment activated."
 
 # 5. 更新pip
@@ -32,9 +32,14 @@ pip install --upgrade pip
 echo "pip upgraded."
 
 # 6. 安装pyxbrain
-pip install pyxbrain
+pip install -U pyxbrain --default-timeout=999
 echo "pyxbrain installed."
 
-# 7. 运行xb
+# 7. 将 pyxbrain 添加到环境变量
+echo "export PATH=$PATH:~/xbrain/.venv/bin" >> ~/.bashrc
+source ~/.bashrc
+echo "pyxbrain added to environment variables."
+
+# 8. 运行xb
 echo 'running xbrain'
 xb
