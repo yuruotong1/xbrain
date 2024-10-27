@@ -1,3 +1,5 @@
+
+chcp 65001
 @echo off
 
 @REM 1. 在用户根目录创建xbrain文件夹
