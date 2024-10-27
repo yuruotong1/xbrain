@@ -11,13 +11,15 @@ xbrain是一个AI漏斗，把巨量用户行为模式映射到少量特定入口
 
 ## ✨特点
 
-1. 屏蔽了提示词，让用户专注于业务开发：用户无需编写提示词，就能开发大模型应用；
-2. 用自然语言开发function call：通过自然语言将本地的python代码接入到openai的function call。
+1. 开箱即用：在命令行一键安装，打开命令行即可使用；
+2. 屏蔽了提示词，让用户专注于业务开发：用户无需编写提示词，就能开发大模型应用；
+3. 用自然语言开发function call：通过自然语言将本地的python代码接入到openai的function call；
+4. 渐进式开发：对用户代码无侵入性。
 
 
 ## 文档
 
-- [指导手册](https://xbrain.notion.site/xbrain-11d42182d0a98003b272d5555c6e9448)
+- [QuickStar](https://xbrain.notion.site/xbrain-11d42182d0a98003b272d5555c6e9448)
 - [开发者文档](https://xbrain.notion.site/12842182d0a9803bb5dcdbfe71826915)
 - [常见问题](https://xbrain.notion.site/b274c33d808a4ddea32244c3fd41719c)
 
