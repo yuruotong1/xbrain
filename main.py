@@ -1,5 +1,6 @@
 import json
 import os
+import subprocess
 from xbrain.chat import prepare_openai_tools, process_chat_response
 from xbrain.command.help_action import get_command_map, show_all_command
 import signal
@@ -27,6 +28,7 @@ def check_config():
 def main(): 
     check_config()
     # 捕获 Ctrl + C 信号，进行更优雅的退出
+    # todo 在 home 目录下创建 .xbrain 目录，用于存放代码、yaml
     signal.signal(signal.SIGINT, signal_handler)
     path = input(f"Current workspace: \n\033[;32m{os.getcwd()}\033[0m\nif you want to change workspace, please input the path or enter to continue:\n>>> ")
     if path:
@@ -54,4 +56,7 @@ def main():
             print(res)
         
 if __name__ == "__main__":
-    main()
+    # main()
+    # _wrapper(["install", "requests"])
+    # pip_main(["install", "requests", "--force-reinstall"])
+    subprocess.run(["python", "-m", "pip", "install", "requests", "--force-reinstall"])
