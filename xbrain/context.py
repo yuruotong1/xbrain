@@ -35,4 +35,4 @@ class ActionRecord:
 
 def update_context():
     context[Type.CURRENT_PATH] = os.getcwd()
-    context[Type.IS_XBRAIN_PROJECT] = os.path.exists(constant.CONFIG_NAME)
+    context[Type.IS_XBRAIN_PROJECT] = os.path.exists(constant.XBRAIN_DIR)

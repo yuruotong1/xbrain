@@ -55,6 +55,6 @@ echo pyxbrain installed.
 setx PATH "%PATH%;%HOMEPATH%\xbrain\.venv\Scripts"
 echo pyxbrain added to environment variables.
 
-@REM 8. 运行xb
-echo running xbrain
-xb
+@REM @REM 8. 运行xb
+@REM echo running xbrain
+@REM xb

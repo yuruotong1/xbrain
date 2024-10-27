@@ -40,6 +40,6 @@ echo "export PATH=$PATH:~/xbrain/.venv/bin" >> ~/.bashrc
 source ~/.bashrc
 echo "pyxbrain added to environment variables."
 
-# 8. 运行xb
-echo 'running xbrain'
-xb
+# # 8. 运行xb
+# echo 'running xbrain'
+# xb

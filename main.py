@@ -1,11 +1,13 @@
 import json
 import os
 from xbrain.chat import prepare_openai_tools, process_chat_response
+from xbrain.command import init_action
 from xbrain.command.help_action import get_command_map, show_all_command
 import signal
 import sys
 from xbrain.context import context, ActionRecord
 from xbrain.context import Type
+from xbrain.utils import constant
 from xbrain.utils.config import Config
 from xbrain.context import update_context
 from xbrain.utils.import_utils import import_action
@@ -29,12 +31,10 @@ def main():
     # 捕获 Ctrl + C 信号，进行更优雅的退出
     # todo 在 home 目录下创建 .xbrain 目录，用于存放代码、yaml
     signal.signal(signal.SIGINT, signal_handler)
-    path = input(f"Current workspace: \n\033[;32m{os.getcwd()}\033[0m\nif you want to change workspace, please input the path or enter to continue:\n>>> ")
-    if path:
-        os.chdir(path)
-        print(f"change to workspace: \n\033[;32m{os.getcwd()}\033[0m")
+    print(f"XBrain {constant.VERSION}")
     import_action()
     while True:
+        print(f"\033[;32mcurrent workspace: {os.getcwd()}\033[0m\n-------\n\n")
         # 更新环境变量
         update_context()
         show_all_command()

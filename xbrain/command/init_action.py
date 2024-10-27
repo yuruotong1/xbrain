@@ -11,8 +11,9 @@ class XBrainInitAction(BaseModel):
 @xbrain_tool.Tool(model=XBrainInitAction, hit_condition = {Type.IS_XBRAIN_PROJECT: False})
 def init_action():
     """init project"""
-    if not os.path.exists(constant.CONFIG_NAME):
-        with open(constant.CONFIG_NAME, "w") as file:
-            file.write("# XBrain project configuration file\n")
-    print(f"success init xbrain project!")
-
+    # 检查并创建.xbrain目录
+    if not os.path.exists(constant.XBRAIN_DIR):
+        os.makedirs(constant.XBRAIN_DIR)
+        with open(os.path.join(constant.XBRAIN_DIR, constant.CONFIG_NAME), "w") as file:
+            file.write("# XBrain project configuration file\n")  
+        print(f"success init xbrain project!")
