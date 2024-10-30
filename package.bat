@@ -1,7 +1,7 @@
 @REM py -m pip install --upgrade build
 rd /s /q dist
-py -m build
-py -m twine upload dist/*
+python -m build
+python -m twine upload dist/*
 
 
 @REM call .\.venv\Scripts\activate

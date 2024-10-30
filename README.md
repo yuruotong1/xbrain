@@ -19,7 +19,7 @@ xbrain是一个AI漏斗，把巨量用户行为模式映射到少量特定入口
 
 ## 文档
 
-- [QuickStar](https://xbrain.notion.site/xbrain-11d42182d0a98003b272d5555c6e9448)
+- [QuickStart](https://xbrain.notion.site/xbrain-11d42182d0a98003b272d5555c6e9448)
 - [开发者文档](https://xbrain.notion.site/12842182d0a9803bb5dcdbfe71826915)
 - [常见问题](https://xbrain.notion.site/b274c33d808a4ddea32244c3fd41719c)
 
