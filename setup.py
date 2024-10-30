@@ -9,7 +9,7 @@ setup(
     description='xbrain专注于构建一款可解释的AI开发框架',
     long_description=long_description, 
     long_description_content_type="text/markdown",  
-    packages=['xbrain', 'xbrain.utils', 'xbrain.command'],
+    packages=['xbrain', 'xbrain.utils', 'xbrain.command', 'xbrain.agent'],
     zip_safe=False,
     install_requires=[
         'pyyaml==6.0.2',

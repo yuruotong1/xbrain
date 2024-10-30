@@ -22,7 +22,7 @@ def process_chat_response(chat_response):
         res = chat_response.content
     return "\n".join(map(str, res)) if isinstance(res, list) else res
 
-def run(messages, chat_model=True, user_prompt=None):
+def run(messages, chat_model=True, user_prompt=""):
     if chat_model:
         import_action()
     chat_response = prepare_openai_tools(messages, user_prompt, chat_model)
