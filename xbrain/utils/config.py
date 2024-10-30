@@ -1,7 +1,5 @@
 import os
 import yaml
-
-
 class Config:
     def __init__(self):
         self.user_home_path = os.path.expanduser("~")  # 获取用户主目录路径
@@ -29,3 +27,10 @@ class Config:
             # 如果文件存在，正常加载配置
             with open(self.config_path, "r") as f:
                 return yaml.load(f, Loader=yaml.FullLoader)
+            
+
+class Constants:
+    def __init__(self):
+        self.CONFIG_NAME = "config.yaml"
+        self.XBRAIN_DIR = ".xbrain"
+        self.VERSION = "1.1.9"

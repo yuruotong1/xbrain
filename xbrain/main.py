@@ -7,13 +7,13 @@ import signal
 import sys
 from xbrain.context import context, ActionRecord
 from xbrain.context import Type
-from xbrain.utils import constant
-from xbrain.utils.config import Config
+from xbrain.utils.config import Config, Constants
 from xbrain.context import update_context
 from xbrain.utils.import_utils import import_action
+from xbrain.utils.translations import _
 
 def signal_handler(sig, frame):
-    print("Nice to meet you here!")
+    print(_("\nNice to meet you here!"))
     sys.exit(0)
 
 def check_config():
@@ -30,8 +30,9 @@ def main():
     check_config()
     # 捕获 Ctrl + C 信号，进行更优雅的退出
     # todo 在 home 目录下创建 .xbrain 目录，用于存放代码、yaml
+    constants = Constants()
     signal.signal(signal.SIGINT, signal_handler)
-    print(f"XBrain {constant.VERSION}")
+    print(f"XBrain {constants.VERSION}")
     import_action()
     while True:
         print(f"\033[;32mcurrent workspace: {os.getcwd()}\033[0m\n-------\n\n")
