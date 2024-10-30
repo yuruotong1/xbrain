@@ -1,8 +1,8 @@
 # 记录当前用户操作的上下文，用于提供实时建议
 from enum import Enum
 import os
+from xbrain.utils.config import Constants
 
-from xbrain.utils import constant
 class Type(Enum):
     CURRENT_PATH = "current_path"
     PRE_ACTIONS = "pre_actions"
@@ -34,5 +34,6 @@ class ActionRecord:
         self.params = params
 
 def update_context():
+    constants = Constants()
     context[Type.CURRENT_PATH] = os.getcwd()
-    context[Type.IS_XBRAIN_PROJECT] = os.path.exists(constant.XBRAIN_DIR)
+    context[Type.IS_XBRAIN_PROJECT] = os.path.exists(constants.XBRAIN_DIR)

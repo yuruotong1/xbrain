@@ -7,6 +7,8 @@ from typing import List
 from flask_openapi3 import OpenAPI, Info
 from flask import jsonify
 from pydantic import BaseModel, Field, ValidationError
+from typing import ClassVar
+from xbrain.utils.translations import _
 
 from xbrain.context import Type
 
@@ -59,11 +61,12 @@ def chat(body: ChatRequestBody):
 
 class XBrainDeploy(BaseModel):
     """deploy a chat server"""
+    description: ClassVar[str] = _("deploy a chat server")
     pass
 
 @xbrain_tool.Tool(model=XBrainDeploy, hit_condition={Type.IS_XBRAIN_PROJECT: True})
 def deploy():
     port = 8001
-    print(f"Service started, chat at: http://127.0.0.1:{port}/chat")
+    print(_("Service started, chat at: http://127.0.0.1:{port}/chat", port=port))
     http_server = WSGIServer(("0.0.0.0", port), app)
     http_server.serve_forever()

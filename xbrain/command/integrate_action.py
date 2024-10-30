@@ -1,11 +1,14 @@
 from pydantic import BaseModel, Field
+from typing import ClassVar
 from xbrain import xbrain_tool
 from xbrain.context import Type
 from xbrain.utils.openai_utils import chat
 import os
+from xbrain.utils.translations import _
 
 class XBrainIntegrate(BaseModel):
     """integrate existing functions into xbrain"""
+    description: ClassVar[str] = _("integrate existing functions into xbrain")
 
 class GenerateActionResponse(BaseModel):
     """Generate action response"""
@@ -37,15 +40,15 @@ def change_to_action(current_directory: str = ""):
                 py_files.append(relative_path)
                 
     # Print all found .py files
-    print("The following .py files were found：\n" + "\n".join([f"{index + 1}: {file}" for index, file in enumerate(py_files)]))
-    file_index = input("\nWhich file would you like to operate on? \n>>> ")
+    print(_("The following .py files were found: \n") + "\n".join([f"{index + 1}: {file}" for index, file in enumerate(py_files)]))
+    file_index = input(_("\nWhich file would you like to operate on? \n>>> "))
     file_name = py_files[int(file_index) - 1]
-    print("You have selected the file:", file_name)
+    print(_("You have selected the file:"), file_name)
     # Get file content
     with open(file_name, 'r', encoding='utf-8') as file:
         file_content = file.read()
         funcs = chat([{"role": "user", "content": file_content}], system_prompt=extract_function_prompt, response_format=ExtractFunctionResponse).parsed
-        func_index = input("Which function would you like to convert? \n" + \
+        func_index = input(_("Which function would you like to convert? \n") + \
                            "\n".join([f"{index+1}: {func.name} \"{func.description}\"" for index, func in enumerate(funcs.funcs)]) + "\n>>> ")
         chat_content = "Please convert the following code's " + \
             funcs.funcs[int(func_index) - 1].name + " function:\n\n" + \
@@ -55,9 +58,9 @@ def change_to_action(current_directory: str = ""):
             code = res.parsed.code.strip().replace("```python", "").replace("```", "")
             with open(file_name, 'w', encoding='utf-8') as file:
                 file.write(code)
-            print("Conversion successful, file generated:", file_name)
+            print(_("Conversion successful, file generated:"), file_name)
         else:
-            print("Parsing failed")
+            print(_("Parsing failed"))
 
 extract_function_prompt = """
 ## Objective ##

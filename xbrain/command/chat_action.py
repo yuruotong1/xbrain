@@ -1,15 +1,18 @@
 from xbrain import xbrain_tool
 from pydantic import BaseModel
+from typing import ClassVar
 import signal
 from xbrain.chat import run
 from xbrain.context import Type
+from xbrain.utils.translations import _
 class XBrainChatAction(BaseModel):
     """chat with my action"""
+    description: ClassVar[str] =_("chat with my action")
     pass
 
 @xbrain_tool.Tool(model=XBrainChatAction, hit_condition={Type.IS_XBRAIN_PROJECT: True})
 def chat_action():
-    print("Welcome to chat mode!")
+    print(_("Welcome to chat mode!"))
     global running
     running = True
     signal.signal(signal.SIGINT, signal_handler)  # Capture Ctrl + C signal
@@ -25,6 +28,6 @@ def chat_action():
         print(res)
 
 def signal_handler(sig, frame):
-    print("\nExiting chat mode, looking forward to seeing you again!")
+    print(_("\nExiting chat mode, looking forward to seeing you again!"))
     global running
     running = False

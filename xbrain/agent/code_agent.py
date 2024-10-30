@@ -3,6 +3,7 @@ from typing import List
 from pydantic import BaseModel, Field
 from xbrain.agent.agent_base import AgentBase
 from xbrain.utils.openai_utils import chat
+from xbrain.utils.translations import _
 
 class CodeAgent(AgentBase):
     def run(self, requirement: str):
@@ -12,7 +13,7 @@ class CodeAgent(AgentBase):
         code = res.parsed.code.strip().replace("```python", "").replace("```", "")
         with open(file_path, 'w', encoding='utf-8') as file:
             file.write(code)
-        print("Creation successful!\nfile generated: ", file_path)
+        print(_("Creation successful!\nfile generated: "), file_path)
         return res.parsed
         
 
