@@ -3,7 +3,7 @@ import yaml
 class Config:
     def __init__(self):
         self.user_home_path = os.path.expanduser("~")  # 获取用户主目录路径
-        self.config_path = os.path.join(self.user_home_path, ".xbrain.yaml")  # 使用用户目录下的配置文件
+        self.config_path = os.path.join(self.user_home_path, "xbrain", "config.yaml")  # 使用用户目录下的配置文件
         self.config = self.load_config()
         self.OPENAI_BASE_URL = self.config["openai"]["base_url"]
         self.OPENAI_API_KEY = self.config["openai"]["api_key"]

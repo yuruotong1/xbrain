@@ -38,99 +38,21 @@ xbrain 能够将任一 Python 函数通过 Tools Call 的方式接入 AI，并�
 - [开发者文档](https://xbrain.notion.site/12842182d0a9803bb5dcdbfe71826915)
 - [常见问题](https://xbrain.notion.site/b274c33d808a4ddea32244c3fd41719c)
 
-## **几个有意思的例子**
+## 几个有意思的例子
 
-# 将任何加减操作映射成两数相加
+### 智能客服系统
+利用 xbrain 将自然语言处理模型接入为服务，创建智能应答机器人，用于自动化客服回答，提高响应速度和质量。
 
-通过xb定义一个加法函数：
 
-```bash
-I guess you want to do the following, or chat with me:
+### 实时数据分析
+使用 xbrain 快速部署数据分析模型，如实时交易数据分析，帮助金融机构监控和分析交易异常，提升风险管理能力。
 
-1. chat with my action
-2. create a new action
-3. deploy a chat server
-4. integrate existing functions into xbrain
+### 内容推荐系统
+通过 xbrain 将推荐算法封装为 HTTP 服务，快速集成到电商或媒体网站中，实现个性化内容推荐，增强用户体验。
 
->>> 2
-Please tell me, the action you want to do?
->>> 两数相加
-Please wait a moment, I'm generating the code for you...
-Creation successful!
-file generated:  C:\Users\yuruo\Desktop\test2\add_action.py
-```
+### 健康诊断服务
+医疗应用中，利用 xbrain 部署疾病诊断模型，通过 HTTP 接口提供远程诊断服务，支持医生和患者快速获取诊断结果。
 
-add_action.py文件的内容：
-
-```python
-from xbrain import xbrain_tool
-from pydantic import BaseModel, Field
-
-class Add(BaseModel):
-    """Add two numbers"""
-    a: int = Field(..., description="First number")
-    b: int = Field(..., description="Second number")
-
-@xbrain_tool.Tool(model=Add)
-def add(a: int, b: int) -> int:
-    """
-    Add two numbers.
-    """
-    return a + b
-```
-
-通过xbrain的chat mode可以实现两数相加：
-
-```python
-I guess you want to do the following, or chat with me:
-
-1. chat with my action
-2. create a new action
-3. deploy a chat server
-4. integrate existing functions into xbrain
-
->>> 1
-Welcome to chat mode!
-💬 1+1
-run action：
- action name:  Add
- action path:  C:\Users\yuruo\Desktop\test2\add_action.py
- action arguments:  {'a': 1, 'b': 1}
- action result:  2
-
-2
-```
-
-然而它也能实现两数相减：
-
-```python
-💬 1-1
-run action：
- action name:  Add
- action path:  C:\Users\yuruo\Desktop\test2\add_action.py
- action arguments:  {'a': 1, 'b': -1}
- action result:  0
-
-0
-```
-
-它还能实现三数相加减，虽然结果不对但我们看到了它的尝试，这也是我们优化的方向：
-
-```python
-💬 1+1+3
-run action：
- action name:  Add
- action path:  C:\Users\yuruo\Desktop\test2\add_action.py
- action arguments:  {'a': 1, 'b': 1}
- action result:  2
-
-run action：
- action name:  Add
- action path:  C:\Users\yuruo\Desktop\test2\add_action.py
- action arguments:  {'a': 1, 'b': 3}
- action result:  4
-
-2
-4
-```
+### 教育与学习辅助
+将教育软件中的解题或语言学习模型通过 xbrain 接入，提供实时学习支持和反馈，增强学习体验和效果。
 
