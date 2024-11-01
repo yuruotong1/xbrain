@@ -23,7 +23,7 @@ def process_chat_response(chat_response):
     return "\n".join(map(str, res)) if isinstance(res, list) else res
 
 def run(messages, chat_mode=True, user_prompt=""):
-    if chat_mode:
+    if chat_mode: # chat mode 到底是指什么
         import_action()
     chat_response = prepare_openai_tools(messages, user_prompt, chat_mode)
     return process_chat_response(chat_response)
