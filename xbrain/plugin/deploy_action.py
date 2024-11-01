@@ -64,7 +64,7 @@ class XBrainDeploy(BaseModel):
     description: ClassVar[str] = _("deploy a chat server")
     pass
 
-@xbrain_tool.Tool(model=XBrainDeploy, hit_condition={Type.IS_XBRAIN_PROJECT: True})
+@xbrain_tool.Tool(model=XBrainDeploy)
 def deploy():
     port = 8001
     print(_("Service started, chat at: http://127.0.0.1:{port}/chat", port=port))

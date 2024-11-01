@@ -23,9 +23,20 @@ class ExtractFunctionResponse(BaseModel):
     """Extract function"""
     funcs: list[Func] = Field(..., description="List of functions")
 
-@xbrain_tool.Tool(model=XBrainIntegrate, hit_condition={Type.IS_XBRAIN_PROJECT: True})
+@xbrain_tool.Tool(model=XBrainIntegrate)
 def change_to_action(current_directory: str = ""):
     current_directory = current_directory or os.getcwd()
+
+    # 在~/brain/project 下创建一个与用户目录相对应的目录，在该目录中生成用户代码的 action 文件
+    brain_project_directory = os.path.join(
+        os.path.expanduser("~"), 
+        "xbrain", 
+        "project", 
+        current_directory.replace(os.path.sep, "_")
+    )
+    print("The brain project directory is:", brain_project_directory)
+    os.makedirs(brain_project_directory, exist_ok=True)
+    
     
     # 获取所有 .py 文件
     py_files = [

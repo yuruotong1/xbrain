@@ -10,7 +10,7 @@ class XBrainChatAction(BaseModel):
     description: ClassVar[str] =_("chat with my action")
     pass
 
-@xbrain_tool.Tool(model=XBrainChatAction, hit_condition={Type.IS_XBRAIN_PROJECT: True})
+@xbrain_tool.Tool(model=XBrainChatAction)
 def chat_action():
     print(_("Welcome to chat mode!"))
     global running

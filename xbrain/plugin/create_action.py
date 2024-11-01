@@ -9,7 +9,7 @@ class XBrainCreate(BaseModel):
     description: ClassVar[str] = _("create a new action")
     pass
 
-@xbrain_tool.Tool(model=XBrainCreate, hit_condition = {Type.IS_XBRAIN_PROJECT: True})
+@xbrain_tool.Tool(model=XBrainCreate)
 def create_action():
     WorkflowAgent().run()
     
