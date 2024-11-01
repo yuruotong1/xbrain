@@ -1,4 +1,5 @@
 @REM py -m pip install --upgrade build
+cd ..
 rd /s /q dist
 rd /s /q build
 python -m build

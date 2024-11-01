@@ -1,7 +1,7 @@
 from xbrain.utils.import_utils import import_action
 from xbrain.utils.openai_utils import chat
-from xbrain.xbrain_tool import run_tool
-import xbrain.xbrain_tool as xb_tool
+from xbrain.core.xbrain_tool import run_tool
+import xbrain.core.xbrain_tool as xb_tool
 
 
 def prepare_openai_tools(messages, user_prompt, chat_model):

@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from xbrain.agent.agent_base import AgentBase
+from xbrain.plugin.agent.agent_base import AgentBase
 from xbrain.utils.openai_utils import chat, multiple_rounds_chat
 
 class ProductAgent(AgentBase):

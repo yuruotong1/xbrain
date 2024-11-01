@@ -1,7 +1,7 @@
 import os
 import importlib
 import sys
-from xbrain.xbrain_tool import clear_tools,tools
+from xbrain.core.xbrain_tool import clear_tools,tools
 
 def import_action():
     # 清空已有模块

@@ -1,8 +1,8 @@
-from xbrain import xbrain_tool
+from xbrain.core import xbrain_tool
 from pydantic import BaseModel
 from typing import ClassVar
 import os
-from xbrain.context import Type
+from xbrain.core.context import Type
 from xbrain.utils.config import Constants
 from typing import ClassVar
 from xbrain.utils.translations import _

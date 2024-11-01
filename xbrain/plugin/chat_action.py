@@ -1,9 +1,9 @@
-from xbrain import xbrain_tool
+from xbrain.core import xbrain_tool
 from pydantic import BaseModel
 from typing import ClassVar
 import signal
-from xbrain.chat import run
-from xbrain.context import Type
+from xbrain.core.chat import run
+from xbrain.core.context import Type
 from xbrain.utils.translations import _
 class XBrainChatAction(BaseModel):
     """chat with my action"""

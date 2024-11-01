@@ -1,8 +1,8 @@
 from pydantic import BaseModel
 from typing import ClassVar
-from xbrain import xbrain_tool
-from xbrain.agent.workflow import WorkflowAgent
-from xbrain.context import Type
+from xbrain.core import xbrain_tool
+from xbrain.plugin.agent.workflow import WorkflowAgent
+from xbrain.core.context import Type
 from xbrain.utils.translations import _
 class XBrainCreate(BaseModel):
     """create a new action"""

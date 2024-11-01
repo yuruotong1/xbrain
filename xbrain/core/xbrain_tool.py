@@ -1,7 +1,7 @@
 import openai
 import json
 import os
-from xbrain.context import context, Type, ActionRecord
+from xbrain.core.context import context, Type, ActionRecord
 tools = []
 
 class Tool:

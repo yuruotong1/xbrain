@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import ClassVar
-from xbrain import xbrain_tool
-from xbrain.context import Type
+from xbrain.core import xbrain_tool
+from xbrain.core.context import Type
 from xbrain.utils.openai_utils import chat
 import os
 from xbrain.utils.translations import _

@@ -1,6 +1,6 @@
-from xbrain.agent.agent_base import AgentBase
-from xbrain.agent.product_agent import ProductAgent
-from xbrain.agent.code_agent import CodeAgent
+from xbrain.plugin.agent.agent_base import AgentBase
+from xbrain.plugin.agent.product_agent import ProductAgent
+from xbrain.plugin.agent.code_agent import CodeAgent
 
 
 class WorkflowAgent(AgentBase):

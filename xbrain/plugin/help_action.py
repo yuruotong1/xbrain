@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from typing import ClassVar
-from xbrain import xbrain_tool
-from xbrain.context import is_hit
+from xbrain.core import xbrain_tool
+from xbrain.core.context import is_hit
 from xbrain.utils.translations import _
 
 class XBrainShowAllCommand(BaseModel):

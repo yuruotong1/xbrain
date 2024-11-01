@@ -1,8 +1,8 @@
 import os
 import unittest
-from xbrain.command import help_action
-from xbrain.command import integrate_action
-from xbrain import chat
+from xbrain.plugin import help_action
+from xbrain.plugin import integrate_action
+from xbrain.core import chat
 from xbrain.utils.config import Config
 class TestCommand(unittest.TestCase):
     def test_show_command(self):

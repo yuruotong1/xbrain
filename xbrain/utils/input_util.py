@@ -1,3 +1,3 @@
-def get_input(prompt):
+def get_input(prompt=""):
     return input(prompt + "\n>>> ")
 

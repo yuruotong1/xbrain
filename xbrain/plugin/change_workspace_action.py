@@ -1,8 +1,8 @@
 import os
-from xbrain import xbrain_tool
+from xbrain.core import xbrain_tool
 from pydantic import BaseModel
 from typing import ClassVar
-from xbrain.command import init_action
+from xbrain.plugin import init_action
 from xbrain.utils.input_util import get_input
 from xbrain.utils.translations import _
 class XBrainChangeWorkspaceAction(BaseModel):

@@ -1,14 +1,16 @@
-import json
-import os
-from xbrain.chat import prepare_openai_tools, process_chat_response
-from xbrain.command import init_action
-from xbrain.command.help_action import get_command_map, show_all_command
-import signal
 import sys
-from xbrain.context import context, ActionRecord
-from xbrain.context import Type
+import os
+# 一般编译器不会把 xbrain 目录加入 PYTHONPATH，所以需要手动添加
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+import json
+from xbrain.core.chat import prepare_openai_tools, process_chat_response
+from xbrain.plugin.help_action import get_command_map, show_all_command
+import signal
+from xbrain.core.context import context, ActionRecord
+from xbrain.core.context import Type
 from xbrain.utils.config import Config, Constants
-from xbrain.context import update_context
+from xbrain.core.context import update_context
 from xbrain.utils.import_utils import import_action
 from xbrain.utils.input_util import get_input
 from xbrain.utils.translations import _

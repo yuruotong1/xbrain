@@ -25,7 +25,7 @@ translations = {
     
     "XBrain relies on the OpenAI API,please config in below path:\n{config_path}.\n\nIf you have problem, please refer to: \n"
     "https://xbrain.notion.site/b274c33d808a4ddea32244c3fd41719c#f85f9774b40c4b63bc6ec28fd11a2dde": 
-    "XBrain 依赖于 OpenAI API，请在以下路径配置：\n{config_path}。\n\n如果遇到问题，请参考：\n"
+    "XBrain 依赖于 OpenAI API，请在以下路径配置：\n{config_path} \n\n如果遇到问题，请参考：\n"
     "https://xbrain.notion.site/b274c33d808a4ddea32244c3fd41719c#f85f9774b40c4b63bc6ec28fd11a2dde"
 }
 
