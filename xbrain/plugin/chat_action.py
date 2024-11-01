@@ -22,6 +22,7 @@ def chat_action():
         try:
             input_str = input("💬 ")
         # When exiting using ctrl + c, an EOFError exception is thrown
+        # 这不会是windows限定吧 mac上是ctrl D
         except EOFError:
             break
         if input_str == "exit":
