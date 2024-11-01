@@ -1,15 +1,15 @@
 from setuptools import setup
-from xbrain.utils import constants
+from xbrain.utils import constant
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
     name='pyxbrain',
-    version=constants.VERSION,
+    version=constant.VERSION,
     description='xbrain专注于构建一款可解释的AI开发框架',
     long_description=long_description, 
     long_description_content_type="text/markdown",  
-    packages=['xbrain', 'xbrain.utils', 'xbrain.command', 'xbrain.agent'],
+    packages=['xbrain', 'xbrain.utils', 'xbrain.plugin', 'xbrain.core'],
     zip_safe=False,
     install_requires=[
         'pyyaml==6.0.2',

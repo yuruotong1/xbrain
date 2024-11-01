@@ -2,7 +2,6 @@ import sys
 import os
 # 一般编译器不会把 xbrain 目录加入 PYTHONPATH，所以需要手动添加
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
 import json
 from xbrain.core.chat import prepare_openai_tools, process_chat_response
 from xbrain.plugin.help_action import get_command_map, show_all_command
