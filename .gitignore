@@ -5,3 +5,5 @@ dist
 config.yaml
 *.log
 **/__pycache__
+.DS_Store
+.xbrain_config.yaml

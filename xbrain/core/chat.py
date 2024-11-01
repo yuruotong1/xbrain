@@ -4,11 +4,11 @@ from xbrain.core.xbrain_tool import run_tool
 import xbrain.core.xbrain_tool as xb_tool
 
 
-def prepare_openai_tools(messages, user_prompt, chat_model):
+def prepare_openai_tools(messages, user_prompt, chat_mode):
     openai_tools = []
     for tool in xb_tool.tools:
         # 如果是 chat 模式，不把内置工具加入到 openai_tools 中
-        if chat_model and tool["name"].startswith("XBrain"):
+        if chat_mode and tool["name"].startswith("XBrain"):
             continue
         else:
             openai_tools.append(tool)
@@ -22,8 +22,8 @@ def process_chat_response(chat_response):
         res = chat_response.content
     return "\n".join(map(str, res)) if isinstance(res, list) else res
 
-def run(messages, chat_model=True, user_prompt=""):
-    if chat_model:
+def run(messages, chat_mode=True, user_prompt=""):
+    if chat_mode:
         import_action()
-    chat_response = prepare_openai_tools(messages, user_prompt, chat_model)
+    chat_response = prepare_openai_tools(messages, user_prompt, chat_mode)
     return process_chat_response(chat_response)

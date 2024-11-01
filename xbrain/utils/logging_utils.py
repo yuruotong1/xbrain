@@ -7,7 +7,7 @@
 
 # # 创建handler
 # # backupCount=2 表示保留2个备份文件。
-# fh = RotatingFileHandler("server.log", maxBytes=10*1024*1024, backupCount=2, encoding="utf-8")
+# fh = RotatingFileHandler("app.log", maxBytes=10*1024*1024, backupCount=2, encoding="utf-8")
 # ch = logging.StreamHandler()
 
 # # 创建单独的错误日志处理器
@@ -25,7 +25,7 @@
 # ch.setFormatter(formatter)
 # error_fh.setFormatter(formatter)  # 为错误日志处理器指定格式
 
-# 为logger添加的日志处理器
+# # 为logger添加的日志处理器
 # logger.addHandler(fh)
 # logger.addHandler(ch)
 # logger.addHandler(error_fh)  # 添加错误日志处理器
