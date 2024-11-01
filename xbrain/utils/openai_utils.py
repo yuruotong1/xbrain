@@ -3,18 +3,22 @@ from xbrain.utils.config import Config
 from pydantic import BaseModel
 from openai import OpenAI
 import openai
+import logging
 
 from xbrain.utils.input_util import get_input
 
+logger = logging.getLogger(__name__)
 
 system_prompt = """
 {prompt_user}
 """
 
 
-def chat(messages, tools=None, system_prompt="", response_format=None):
+def chat(messages, tools=None, 
+         system_prompt="You are a helpful assistant", response_format=None):
     config = Config()
     client = OpenAI(base_url=config.OPENAI_BASE_URL, api_key=config.OPENAI_API_KEY)
+    logger.info(system_prompt)
     formatted_prompt = system_prompt.format(
         prompt_user=system_prompt
     )
@@ -24,7 +28,7 @@ def chat(messages, tools=None, system_prompt="", response_format=None):
         messages=messages,
         temperature=0.1,
         **({"response_format": response_format} if response_format is not None else {}),
-        **({"tools": [openai.pydantic_function_tool(tool) for tool in tools]} if tools is not None else {}),
+        **({"tools": [openai.pydantic_function_tool(tool) for tool in tools] if tools else None} if tools else {}),
     )
     message = response.choices[0].message
     return message
