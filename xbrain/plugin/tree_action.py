@@ -4,10 +4,6 @@ from xbrain.core import xbrain_tool
 from xbrain.utils.translations import _
 import os
 import fnmatch
-import logging
-
-logger = logging.getLogger(__name__)
-
 class XBrainTree(BaseModel):
     '''Generate a tree of a directory'''
     description: ClassVar[str] = _("Generate a tree of a directory")
@@ -22,7 +18,6 @@ class XBrainTree(BaseModel):
 @xbrain_tool.Tool(model=XBrainTree)
 def tree(path: Optional[str] = None,
          ignore_patterns: Optional[List[str]] = None) -> Dict:
-    logger.info(f"调用工具时的入参: {path}, {ignore_patterns}")
     if path is None:
         path = '.'
     if ignore_patterns is None:

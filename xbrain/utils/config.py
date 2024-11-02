@@ -1,6 +1,5 @@
 import os
 import yaml
-import logging
 class Config:
     def __init__(self):
         self.user_home_path = os.path.expanduser("~")  # 获取用户主目录路径
@@ -36,12 +35,6 @@ class Constants:
     def __init__(self):
         self.CONFIG_NAME = "config.yaml"
         self.XBRAIN_DIR = ".xbrain"
-        self.VERSION = "1.1.9"
+        self.VERSION = "1.1.14"
 
 
-
-logger_config = logging.basicConfig(
-    filename='xbrain.log',
-    level=logging.INFO, 
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
