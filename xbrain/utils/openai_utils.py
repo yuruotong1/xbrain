@@ -1,3 +1,5 @@
+import os
+from pathlib import Path
 from pydantic import Field
 from xbrain.utils.config import Config
 from pydantic import BaseModel
@@ -29,6 +31,16 @@ def chat(messages, tools=None,
     )
     message = response.choices[0].message
     return message
+
+def text_to_speech(text: str):
+    config = Config()
+    client = OpenAI(base_url=config.OPENAI_BASE_URL, api_key=config.OPENAI_API_KEY, timeout=999)
+    with client.audio.speech.with_streaming_response.create(
+    model="tts-1-hd-1106",
+    voice="echo",
+    input=text
+    )as response:
+        response.stream_to_file(os.path.join(Path.cwd(), "speech.mp3"))
 
 
 # 与用户进行多轮对话，直到没有问题为止
