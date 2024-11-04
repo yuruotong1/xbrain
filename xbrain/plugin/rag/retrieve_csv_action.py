@@ -18,7 +18,7 @@ def retrieve_action(query: str):
     embedding = generate_embedding(query)
     df['similarities'] = df.ada_embedding.apply(lambda x: cosine_similarity(x, embedding))
     res = df.sort_values('similarities', ascending=False).head(3)
-    print(res)
+    print(res['data'].tolist())
 
 if __name__ == "__main__":
     retrieve_action("a460型号")

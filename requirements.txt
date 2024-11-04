@@ -10,4 +10,3 @@ wheel==0.44.0
 # build==1.2.2.post1
 pyinstaller==6.11.0
 gradio==5.4.0
-zhon==2.0.2

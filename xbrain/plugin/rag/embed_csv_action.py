@@ -22,15 +22,13 @@ class XBrainEmbed(BaseModel):
 
 @xbrain_tool.Tool(model=XBrainEmbed)
 def embedding_csv_action(path: str):
-    # 检查文件是否存在，如果不存在则创建
-    if not os.path.exists('./.embedded.csv'):
-        # 创建一个空的 DataFrame 并保存为 CSV
-        pd.DataFrame(columns=['ada_embedding']).to_csv('./.embedded.csv', index=False)
+    # 创建一个csv
+    pd.DataFrame(columns=['ada_embedding', 'data']).to_csv('./.embedded.csv', index=False)
     
     text_data = extract_text(path)
     chunks = split_text(text_data.get('content'))
-    print("chunks:\n", chunks)
     df = pd.read_csv("./.embedded.csv")
+    df['data'] = chunks
     embeddings = []
     for chunk in chunks:
         # 使用 loc 方法添加新行
