@@ -21,7 +21,7 @@ class XBrainEmbed(BaseModel):
     )
 
 @xbrain_tool.Tool(model=XBrainEmbed)
-def embedding_action(path: str):
+def embedding_csv_action(path: str):
     # 检查文件是否存在，如果不存在则创建
     if not os.path.exists('./.embedded.csv'):
         # 创建一个空的 DataFrame 并保存为 CSV
@@ -29,8 +29,8 @@ def embedding_action(path: str):
     
     text_data = extract_text(path)
     chunks = split_text(text_data.get('content'))
+    print("chunks:\n", chunks)
     df = pd.read_csv("./.embedded.csv")
-    df['data'] = chunks
     embeddings = []
     for chunk in chunks:
         # 使用 loc 方法添加新行
@@ -38,7 +38,4 @@ def embedding_action(path: str):
     df['ada_embedding'] = embeddings
     df.to_csv('./.embedded.csv', index=False)
 
-
-if __name__ == "__main__":
-    embedding_action(r"C:\Users\yuruo\Desktop\test\测试文本.txt")
 
