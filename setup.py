@@ -1,8 +1,9 @@
 from setuptools import setup
-from xbrain.utils import constant
+from xbrain.utils.config import Constants
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
+constant = Constants() 
 setup(
     name='pyxbrain',
     version=constant.VERSION,

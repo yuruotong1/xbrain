@@ -11,12 +11,18 @@ class XBrainShowAllCommand(BaseModel):
 
 def get_tools():
     show_tools = []
+    exit_tool = None
     for tool in xbrain_tool.tools:
         if not tool["name"].startswith("XBrain") or \
            not is_hit(tool["hit_condition"]) or \
            tool["name"].startswith("XBrainShowAllCommand"):
             continue
-        show_tools.append(tool)
+        elif tool["name"].startswith("XBrainExitModel"):
+            exit_tool = tool
+        else:
+            show_tools.append(tool)
+    # we want to be the last one
+    show_tools.append(exit_tool)
     return show_tools
 
 @xbrain_tool.Tool(model=XBrainShowAllCommand)

@@ -10,3 +10,4 @@ config.yaml
 .vsdb/
 logging_config.py
 .embedded.csv
+.jython_cache/
