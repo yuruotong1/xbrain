@@ -7,3 +7,5 @@ config.yaml
 **/__pycache__
 .DS_Store
 .xbrain_config.yaml
+.vsdb/
+logging_config.py

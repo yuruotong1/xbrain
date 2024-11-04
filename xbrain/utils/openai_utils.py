@@ -12,12 +12,12 @@ from xbrain.utils.input_util import get_input
 system_prompt = """
 {prompt_user}
 """
+config = Config()
+client = OpenAI(base_url=config.OPENAI_BASE_URL, api_key=config.OPENAI_API_KEY)
 
 
 def chat(messages, tools=None, 
          system_prompt="You are a helpful assistant", response_format=None):
-    config = Config()
-    client = OpenAI(base_url=config.OPENAI_BASE_URL, api_key=config.OPENAI_API_KEY)
     formatted_prompt = system_prompt.format(
         prompt_user=system_prompt
     )
@@ -63,4 +63,8 @@ def multiple_rounds_chat(is_complete_description, content_description, question_
             messages.append({"role": "user", "content": user_input})
     
 
-
+def generate_embedding(text):
+    """Generate embeddings for the given text."""
+    response = client.embeddings.create(input=text, model="text-embedding-ada-002")
+    embedding = response.data[0].embedding
+    return embedding

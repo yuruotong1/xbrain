@@ -14,6 +14,7 @@ from xbrain.utils.import_utils import import_action
 from xbrain.utils.input_util import get_input
 from xbrain.utils.translations import _
 
+
 def signal_handler(sig, frame):
     print(_("\nNice to meet you here!"))
     sys.exit(0)
