@@ -10,7 +10,7 @@ from xbrain.core import xbrain_tool
 
 class XBrainChatAction(BaseModel):
     '''Start a chat with xbrain'''
-    description: ClassVar[str] = "部署为聊天机器人"
+    description: ClassVar[str] = _("Start a chat with xbrain")
 
     user_prompt: Optional[str] = Field(
         description="The system prompt for this demo, basically what this agent is made for."
@@ -35,7 +35,7 @@ def gradio_demo(user_prompt: Optional[str] = None):
             return "", history
 
         def bot(history: list):
-            bot_message = run(messages=history, user_prompt=user_prompt, chat_mode=True)
+            bot_message = run(messages=history, user_prompt=user_prompt, chat_mode=False)
             history.append({"role": "assistant", "content": ""})
             for character in bot_message:
                 history[-1]['content'] += character

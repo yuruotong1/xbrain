@@ -58,7 +58,6 @@ class XBrainEmbed(BaseModel):
         description="path to file or directory of files that needs to be embedded and stored."
     )
 
-@xbrain_tool.Tool(model=XBrainEmbed)
 def embedding_action(path: str):
     # can easily expand to list, just provide a folder with text to embed
     input_data: dict = extract_text(path)

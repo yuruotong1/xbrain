@@ -2,8 +2,6 @@ import os
 import re
 import logging
 
-import zhon
-
 logger = logging.getLogger(__name__)
 
 def extract_text(file_path):
