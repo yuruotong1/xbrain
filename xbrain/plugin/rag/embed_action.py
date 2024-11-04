@@ -1,11 +1,10 @@
 from pymilvus import MilvusClient, FieldSchema, CollectionSchema, DataType
 from pydantic import BaseModel, Field
-from typing import ClassVar, Optional, List, Dict
+from typing import ClassVar
 from xbrain.core import xbrain_tool
 from xbrain.utils.translations import _
 from xbrain.utils.openai_utils import generate_embedding
 from xbrain.utils.file_utils import extract_text, split_text
-import uuid
 import os
 import logging
 
@@ -70,6 +69,5 @@ def embedding_action(path: str):
     for chunk in chunks:
         embeddings.append(generate_embedding(chunk))
     save_to_db(chunks, embeddings, metadata)
-
     print(f"Saved embedding for file {path}")  
 
