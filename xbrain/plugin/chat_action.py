@@ -35,7 +35,7 @@ def gradio_demo(user_prompt: Optional[str] = None):
             return "", history
 
         def bot(history: list):
-            bot_message = run(messages=history, user_prompt=user_prompt, chat_mode=False)
+            bot_message = run(messages=history, user_prompt=user_prompt)
             history.append({"role": "assistant", "content": ""})
             for character in bot_message:
                 history[-1]['content'] += character

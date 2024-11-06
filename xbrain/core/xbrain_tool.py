@@ -59,4 +59,5 @@ def run_tool(openai_res):
 
 def clear_tools():
     global tools
+    # 不清空内置工具，只清空用户的工具
     tools = [tool for tool in tools if tool['name'].startswith('XBrain')]
