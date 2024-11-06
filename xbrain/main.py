@@ -1,5 +1,7 @@
 import sys
 import os
+
+from xbrain.plugin.help_action import show_all_command
 # 一般编译器不会把 xbrain 目录加入 PYTHONPATH，所以需要手动添加
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import json
@@ -9,7 +11,6 @@ from xbrain.core.context import context, ActionRecord
 from xbrain.core.context import Type
 from xbrain.utils.config import Config, Constants
 from xbrain.core.context import update_context
-from xbrain.utils.import_utils import import_action
 from xbrain.utils.input_util import get_input
 from xbrain.utils.translations import _
 
@@ -34,9 +35,10 @@ def main():
     constants = Constants()
     signal.signal(signal.SIGINT, signal_handler)
     print(f"XBrain {constants.VERSION}")
-    import_action()
     while True:
         print(f"\033[;32m请输入你的需求！\033[0m")
+        res = show_all_command()
+        print(res)
         # 更新环境变量
         update_context()
         try:

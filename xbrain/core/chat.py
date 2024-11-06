@@ -1,4 +1,3 @@
-from xbrain.utils.import_utils import import_action
 from xbrain.utils.openai_utils import chat
 from xbrain.core.xbrain_tool import run_tool
 from xbrain.core.xbrain_tool import tools
@@ -16,6 +15,5 @@ def process_chat_response(chat_response):
     return chat_response.content
 
 def run(messages, user_prompt=""):
-    import_action()
     chat_response = prepare_openai_tools(messages, user_prompt)
     return process_chat_response(chat_response)
