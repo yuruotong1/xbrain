@@ -9,3 +9,4 @@ config.yaml
 .xbrain_config.yaml
 .vsdb/
 logging_config.py
+.embedded.csv

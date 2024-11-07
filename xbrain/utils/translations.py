@@ -19,7 +19,11 @@ translations = {
     "XBrain relies on the OpenAI API,please config in below path:\n{config_path}.\n\nIf you have problem, please refer to: \n"
     "https://xbrain.notion.site/b274c33d808a4ddea32244c3fd41719c#f85f9774b40c4b63bc6ec28fd11a2dde": 
     "XBrain 依赖于 OpenAI API，请在以下路径配置：\n{config_path} \n\n如果遇到问题，请参考：\n"
-    "https://xbrain.notion.site/b274c33d808a4ddea32244c3fd41719c#f85f9774b40c4b63bc6ec28fd11a2dde"
+    "https://xbrain.notion.site/b274c33d808a4ddea32244c3fd41719c#f85f9774b40c4b63bc6ec28fd11a2dde",
+    "Start a chat with xbrain": "部署网页版交互界面",
+    "Stores embedding of text into vectorstore database": "把文档存入向量数据库",
+    "Return top 3 matched text results based on query embedding": "返回向量数据库的查询结果"
+
 }
 
 def _(string, lang="zh", **kwargs): # lang needs to be a global in the future

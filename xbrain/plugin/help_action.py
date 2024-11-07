@@ -5,9 +5,7 @@ from xbrain.core.context import is_hit
 from xbrain.utils.translations import _
 
 class XBrainShowAllCommand(BaseModel):
-    """Show all capabilities"""
-    description: ClassVar[str] = _("Show all capabilities")
-    pass
+    description: ClassVar[str] = "列举所有能力"
 
 def get_tools():
     show_tools = []
@@ -21,13 +19,10 @@ def get_tools():
 
 @xbrain_tool.Tool(model=XBrainShowAllCommand)
 def show_all_command():
-    res = _("I guess you want to do the following, or chat with me:\n\n")
     number = 1
     show_tools = get_tools()
+    res = ""
     for tool in show_tools:
         res += f"{number}. {_(tool['description'])}\n"
         number += 1
-    print(res)
-
-def get_command_map():
-    return {str(i + 1): tool['func'] for i, tool in enumerate(get_tools())}
+    return res
