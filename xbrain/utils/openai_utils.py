@@ -1,6 +1,8 @@
+import json
 import os
 from pathlib import Path
 from pydantic import Field
+import requests
 from xbrain.utils.config import Config
 from pydantic import BaseModel
 from openai import OpenAI
@@ -41,6 +43,17 @@ def text_to_speech(text: str):
     input=text
     )as response:
         response.stream_to_file(os.path.join(Path.cwd(), "speech.mp3"))
+
+
+def text_to_image(text: str):
+    config = Config()
+    client = OpenAI(base_url=config.OPENAI_BASE_URL, api_key=config.OPENAI_API_KEY, timeout=999)
+
+    with client.images.with_streaming_response.generate(prompt=text, model="dall-e-3", n=1, size="1024x1024") as response:
+        json_content = json.loads(response.read().decode('utf-8'))
+        image_data = requests.get(json_content['data'][0]['url']).content
+        with open("image.webp", "wb") as file:
+            file.write(image_data)
 
 
 # 与用户进行多轮对话，直到没有问题为止
