@@ -19,8 +19,8 @@
 3. 定义Prompt模板
 4. 定义输出解析器
 
+<img src="./image/README/langchain开发步骤.png" style="background-color: white; padding: 10px;" />
 
-![langchain开发步骤](./image/README/langchain开发步骤.png)
 
 如果你用swarm开发Agent应用，需要以下四步：
 1. 基础组件设置
@@ -28,15 +28,14 @@
 3. 任务协调系统
 4. 工作流程实现
 
+<img src="./image/README/swarm开发步骤.png" style="background-color: white; padding: 10px;" />
 
-![swarm开发步骤](./image/README/swarm开发步骤.png)
 
 但是，如果你用xbrain开发Agent应用，一切将变得非常美好，只需要两步：
 1. 编写工具
 2. 与AI聊天部署运行
 
-
-![xbrain开发步骤](./image/README/xbrain开发步骤.png)
+<img src="./image/README/xbrain开发步骤.png" style="background-color: white; padding: 10px;" />
 
 
 
