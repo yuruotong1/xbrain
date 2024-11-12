@@ -2,31 +2,24 @@ from pydantic import Field, BaseModel
 from typing import List, Dict, Any, Optional
 from pydantic.dataclasses import dataclass
 
-@dataclass
-class Node():
-    id: str = Field(
-        description="Unique identifier for the node."
-    )
+class Parameters(BaseModel):
+    type: str = Field(description="type")
+    properties: dict = Field(description="parameters properties")
+    required: list[str] = Field(description="被填参数")
+
+
+
+class Node(BaseModel):
     name: str = Field(
         description="Human-readable name of the node."
     )
-    action: callable = Field(
-        description="Function to be executed in the node."
+    description: str = Field(
+        description="Function description."
     )
-    inputs: Dict[str, Any] = Field(
-        default_factory=dict,
-        description="Dictionary of inputs specific to the node."
-    )
-    outputs: Dict[str, Any] = Field(
-        default_factory=dict,
-        description="Dictionary of output identifiers produced by the node."
-    )
-    metadata: Dict[str, Any] = Field(
-        default_factory=dict,
-        description="Optional metadata about the node."
+    parameters: Parameters = Field(
+        description="parameters of function"
     )
 
-@dataclass
 class Connection():
     source_node: str = Field(
         description="ID of the source node."
