@@ -35,3 +35,6 @@ def run_module(module_name, module_path):
 
 def is_venv_dir(path):
     return os.path.isfile(os.path.join(path, 'pyvenv.cfg'))
+
+def is_xbrain_dir(path):
+    return os.path.isfile(os.path.join(path, '.xbrain'))
