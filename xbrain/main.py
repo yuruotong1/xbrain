@@ -1,8 +1,8 @@
 import sys
 import os
-from xbrain.plugin.help_action import show_all_command
 # 一般编译器不会把 xbrain 目录加入 PYTHONPATH，所以需要手动添加
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+import xbrain.plugin
 from xbrain.core.chat import run
 import signal
 from xbrain.utils.config import Config, Constants
