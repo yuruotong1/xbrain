@@ -35,5 +35,6 @@ def embedding_csv_action(path: str):
         embeddings.append(generate_embedding(chunk))
     df['ada_embedding'] = embeddings
     df.to_csv('./.embedded.csv', index=False)
+    return os.path.abspath('./.embedded.csv')
 
 

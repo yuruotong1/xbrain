@@ -5,7 +5,7 @@ from pydantic.dataclasses import dataclass
 class Parameters(BaseModel):
     type: str = Field(description="type")
     properties: dict = Field(description="parameters properties")
-    required: list[str] = Field(description="被填参数")
+    required: list[str] = Field(description="必填参数有哪些")
 
 
 
