@@ -28,7 +28,7 @@ prompt = """
 You are a code assistant responsible for converting user requirements into actions. You need to do the following:
 
 1. Fully understand the user's requirements and convert them into an action.
-2. Import xbrain_tool at the top of the code, `from xbrain import xbrain_tool`
+2. Import xbrain_tool at the top of the code, `from xbrain.core import xbrain_tool`
 3. Generate a function based on the user's description, introduce the appropriate Python packages, and add the @xbrain_tool.Tool decorator to the function;
 4. Generate a corresponding pydantic basemodel based on the function name, logic (or comments), and parameters.
 5. Name a Python file and return it.
@@ -41,7 +41,7 @@ Input: I want to add two numbers
 Output:
 add_action.py
 
-from xbrain import xbrain_tool
+from xbrain.core import xbrain_tool
 class Add(BaseModel):
     \"\"\"Add two numbers\"\"\"
     a: int = Field(..., description="First number")
