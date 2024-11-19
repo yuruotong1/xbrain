@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name='pyxbrain',
-    version= Constants.VERSION,
+    version= Constants().VERSION,
     description='xbrain专注于构建一款可解释的AI开发框架',
     long_description=long_description, 
     long_description_content_type="text/markdown",  
@@ -17,7 +17,6 @@ setup(
         'requests==2.32.3',
         'flask==3.0.3',
         'flask-openapi3==3.1.3',
-        'gevent==24.2.1',
     ],
     entry_points={
         'console_scripts': [
