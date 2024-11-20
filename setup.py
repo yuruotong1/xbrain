@@ -17,6 +17,7 @@ setup(
         'requests==2.32.3',
         'flask==3.0.3',
         'flask-openapi3==3.1.3',
+        'gradio==4.44.1',
     ],
     entry_points={
         'console_scripts': [

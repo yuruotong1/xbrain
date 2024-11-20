@@ -1,5 +1,4 @@
 import os
-import yaml
 class Config:
     def __init__(self):
         self.user_home_path = os.path.expanduser("~")  # 获取用户主目录路径
@@ -11,6 +10,7 @@ class Config:
 
 
     def load_config(self):
+        import yaml
         # 确保目录存在
         os.makedirs(os.path.dirname(self.config_path), exist_ok=True)
         if not os.path.exists(self.config_path):
@@ -35,6 +35,6 @@ class Constants:
     def __init__(self):
         self.CONFIG_NAME = "config.yaml"
         self.XBRAIN_DIR = ".xbrain"
-        self.VERSION = "1.1.16"
+        self.VERSION = "1.1.17"
 
 
