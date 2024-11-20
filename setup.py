@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import find_packages, setup
 from xbrain.utils.config import Constants
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
@@ -9,7 +9,7 @@ setup(
     description='xbrain专注于构建一款可解释的AI开发框架',
     long_description=long_description, 
     long_description_content_type="text/markdown",  
-    packages=['xbrain', 'xbrain.utils', 'xbrain.plugin', 'xbrain.core'],
+    packages=find_packages(include=['xbrain']),
     zip_safe=False,
     install_requires=[
         'pyyaml==6.0.2',
