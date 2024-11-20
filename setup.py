@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 setup(
     name='pyxbrain',
     version= Constants().VERSION,
-    description='xbrain专注于构建一款可解释的AI开发框架',
+    description='XBrain 是一个让 Python 函数变身为 AI 驱动的 HTTP 服务的超级智能体',
     long_description=long_description, 
     long_description_content_type="text/markdown",  
     packages=find_packages(include=['xbrain']),

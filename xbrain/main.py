@@ -38,7 +38,7 @@ def main():
         # 更新环境变量
         update_context()
         try:
-            input_str = get_input("\033[;32m请输入你的需求！\033[0m")
+            input_str = get_input()
         except EOFError:
             # 在input中输入 Ctrl + C 会触发 EOFError，这里需要捕获异常
             break
