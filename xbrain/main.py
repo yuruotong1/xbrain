@@ -1,5 +1,7 @@
 import sys
 import os
+
+from xbrain.plugin.help_action import show_all_command
 # 一般编译器不会把 xbrain 目录加入 PYTHONPATH，所以需要手动添加
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import xbrain.plugin
@@ -30,7 +32,7 @@ def main():
     # 捕获 Ctrl + C 信号，进行更优雅的退出
     constants = Constants()
     signal.signal(signal.SIGINT, signal_handler)
-    print(f"XBrain {constants.VERSION}")
+    print(f"你好，我是XBrain{constants.VERSION}，一个让 Python 函数变身为 AI 驱动的 HTTP 服务的超级智能体！\n我能做以下事情：\n\n" + show_all_command())
     messages = []
     while True:
         # 更新环境变量
@@ -41,7 +43,7 @@ def main():
             # 在input中输入 Ctrl + C 会触发 EOFError，这里需要捕获异常
             break
         messages.append({"role": "user", "content": input_str})
-        res = run(messages)
+        res = run(messages, user_prompt="你是XBrain，请使用中文回复")
         print(res)
 
 if __name__ == "__main__":

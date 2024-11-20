@@ -13,7 +13,7 @@ class ProductAgent(AgentBase):
 
         design = chat(
             messages=[{"role": "user", "content": requirement}],
-            system_prompt=workflow2_prompt,
+            user_prompt=workflow2_prompt,
             response_format=Workflow2Model
             )
         

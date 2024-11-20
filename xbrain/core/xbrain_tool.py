@@ -12,12 +12,6 @@ class Tool:
     def __call__(self, func):
         # 利用 openai 官方的转换函数，提取 name
         function = openai.pydantic_function_tool(self.model)
-        # 删除已经导入的工具
-        for tool in tools:
-            if tool["name"] == function["function"]["name"] and \
-               os.path.samefile(tool["path"], func.__code__.co_filename):
-                tools.remove(tool)
-                break
         tools.append({
             "name": function["function"]["name"],
             "description": function["function"].get("description", ""),
@@ -45,19 +39,11 @@ def run_tool(openai_res):
         tool_func = info["func"]
         run_res = tool_func(**json.loads(tool_call.function.arguments))
         run_res = run_res if run_res is not None else ""
-        print("run action: \n", 
+        print("\033[90mrun action: \n", 
               "action name: ", tool_call.function.name, "\n",
-              "action path: ", info["path"], "\n",
-              "action arguments: ", json.loads(tool_call.function.arguments), "\n", 
-              "action result: ", run_res, "\n\n"
+              "action arguments: ", json.loads(tool_call.function.arguments), "\033[0m", "\n", 
               )
         # 存储到上下文中
         context[Type.PRE_ACTIONS].append(ActionRecord(tool_call.function.name, json.loads(tool_call.function.arguments)))
         res.append(run_res)
     return res
-
-
-def clear_tools():
-    global tools
-    # 不清空内置工具，只清空用户的工具
-    tools = [tool for tool in tools if tool['name'].startswith('XBrain')]

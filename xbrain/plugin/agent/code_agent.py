@@ -7,7 +7,7 @@ from xbrain.utils.translations import _
 
 class CodeAgent(AgentBase):
     def run(self, requirement: str):
-        res = chat([{"role": "user", "content": requirement}], system_prompt=prompt, response_format=WorkflowModel) 
+        res = chat([{"role": "user", "content": requirement}], user_prompt=prompt, response_format=WorkflowModel) 
         current_directory = os.getcwd()
         file_path = os.path.join(current_directory, res.parsed.py_name)
         code = res.parsed.code.strip().replace("```python", "").replace("```", "")

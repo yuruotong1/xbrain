@@ -7,8 +7,7 @@ import os
 from xbrain.utils.translations import _
 from xbrain.utils.input_util import get_input
 class XBrainIntegrate(BaseModel):
-    """integrate existing functions into xbrain"""
-    description: ClassVar[str] = _("integrate existing functions into xbrain")
+    """将现有的函数改写成XBrain插件"""
 
 class GenerateActionResponse(BaseModel):
     """Generate action response"""
@@ -59,13 +58,13 @@ def change_to_action(current_directory: str = ""):
         file_content = file.read()
     
     # 提取函数，并让用户确认
-    funcs = chat([{"role": "user", "content": file_content}], system_prompt=extract_function_prompt, response_format=ExtractFunctionResponse).parsed
+    funcs = chat([{"role": "user", "content": file_content}], user_prompt=extract_function_prompt, response_format=ExtractFunctionResponse).parsed
     func_index = int(get_input(_("Which function would you like to convert? \n") + 
                                "\n".join([f"{index+1}: {func.name} \"{func.description}\"" for index, func in enumerate(funcs.funcs)]))) - 1
     
     # 转换函数
     chat_content = f"Please convert the following code's {funcs.funcs[func_index].name} function:\n\n{file_content}"
-    res = chat([{"role": "user", "content": chat_content}], system_prompt=prompt, response_format=GenerateActionResponse)
+    res = chat([{"role": "user", "content": chat_content}], user_prompt=prompt, response_format=GenerateActionResponse)
     
     if res.parsed:
         code = res.parsed.code.strip().replace("```python", "").replace("```", "")

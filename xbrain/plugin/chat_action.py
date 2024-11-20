@@ -9,8 +9,7 @@ from xbrain.core import xbrain_tool
 
 
 class XBrainChatAction(BaseModel):
-    '''Start a chat with xbrain'''
-    description: ClassVar[str] = _("Start a chat with xbrain")
+    """开始一个聊天"""
 
     user_prompt: Optional[str] = Field(
         description="The system prompt for this demo, basically what this agent is made for."

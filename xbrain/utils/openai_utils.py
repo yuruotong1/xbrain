@@ -12,16 +12,16 @@ from xbrain.utils.input_util import get_input
 
 
 system_prompt = """
-{prompt_user}
+{user_prompt}
 """
 config = Config()
 client = OpenAI(base_url=config.OPENAI_BASE_URL, api_key=config.OPENAI_API_KEY)
 
 
 def chat(messages, tools=None, 
-         system_prompt="You are a helpful assistant", response_format=None):
+         user_prompt="You are a helpful assistant", response_format=None):
     formatted_prompt = system_prompt.format(
-        prompt_user=system_prompt
+        user_prompt=user_prompt
     )
     messages = [{"role": "system", "content": formatted_prompt}] + messages
     response = client.beta.chat.completions.parse(

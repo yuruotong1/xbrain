@@ -2,12 +2,10 @@ import json
 from xbrain.utils.openai_utils import chat
 from xbrain.core.xbrain_tool import run_tool
 from xbrain.core import xbrain_tool
-from xbrain.utils.import_utils import import_action
 
 # 向openai发送消息，并返回response
 def prepare_openai_tools(messages, user_prompt):
-    import_action()
-    chat_response = chat(messages, tools=[i["model"] for i in xbrain_tool.tools], system_prompt=user_prompt)
+    chat_response = chat(messages, tools=[i["model"] for i in xbrain_tool.tools], user_prompt=user_prompt)
     return chat_response
 
 # 如果有工具调用，则执行工具调用，并返回response

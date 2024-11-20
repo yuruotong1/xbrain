@@ -1,11 +1,10 @@
 from pydantic import BaseModel
-from typing import ClassVar
 from xbrain.core import xbrain_tool
 from xbrain.core.context import is_hit
 from xbrain.utils.translations import _
 
 class XBrainShowAllCommand(BaseModel):
-    description: ClassVar[str] = "列举所有能力"
+    """列举所有能力、help、功能"""
 
 def get_tools():
     show_tools = []
@@ -23,6 +22,6 @@ def show_all_command():
     show_tools = get_tools()
     res = ""
     for tool in show_tools:
-        res += f"{number}. {_(tool['description'])}\n"
+        res += f"{number}. {tool['description']}\n"
         number += 1
     return res
