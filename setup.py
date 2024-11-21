@@ -9,7 +9,7 @@ setup(
     description='XBrain 是一个让 Python 函数变身为 AI 驱动的 HTTP 服务的超级智能体',
     long_description=long_description, 
     long_description_content_type="text/markdown",  
-    packages=find_packages(include=['xbrain']),
+    packages=['xbrain', 'xbrain.plugin', 'xbrain.core', 'xbrain.utils', 'xbrain.plugin.agent'],
     zip_safe=False,
     install_requires=[
         'pyyaml==6.0.2',
