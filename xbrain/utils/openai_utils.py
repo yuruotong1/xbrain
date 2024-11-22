@@ -14,15 +14,14 @@ from xbrain.utils.input_util import get_input
 system_prompt = """
 {user_prompt}
 """
-config = Config()
-client = OpenAI(base_url=config.OPENAI_BASE_URL, api_key=config.OPENAI_API_KEY)
-
 
 def chat(messages, tools=None, 
          user_prompt="You are a helpful assistant", response_format=None):
     formatted_prompt = system_prompt.format(
         user_prompt=user_prompt
     )
+    config = Config()
+    client = OpenAI(base_url=config.OPENAI_BASE_URL, api_key=config.OPENAI_API_KEY)
     messages = [{"role": "system", "content": formatted_prompt}] + messages
     response = client.beta.chat.completions.parse(
         model=config.OPENAI_MODEL,
@@ -48,7 +47,6 @@ def text_to_speech(text: str):
 def text_to_image(text: str):
     config = Config()
     client = OpenAI(base_url=config.OPENAI_BASE_URL, api_key=config.OPENAI_API_KEY, timeout=999)
-
     with client.images.with_streaming_response.generate(prompt=text, model="dall-e-3", n=1, size="1024x1024") as response:
         json_content = json.loads(response.read().decode('utf-8'))
         image_data = requests.get(json_content['data'][0]['url']).content
@@ -78,6 +76,8 @@ def multiple_rounds_chat(is_complete_description, content_description, question_
 
 def generate_embedding(text):
     """Generate embeddings for the given text."""
+    config = Config()
+    client = OpenAI(base_url=config.OPENAI_BASE_URL, api_key=config.OPENAI_API_KEY)
     response = client.embeddings.create(input=text, model="text-embedding-ada-002")
     embedding = response.data[0].embedding
     return embedding
