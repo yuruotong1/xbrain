@@ -58,23 +58,35 @@
 - [常见问题：你想知道的答案都在这里](https://xbrain.notion.site/b274c33d808a4ddea32244c3fd41719c)
 - [开发者指南：欢迎加入我们](https://xbrain.notion.site/12842182d0a9803bb5dcdbfe71826915?pvs=4)
 
-## 几个有意思的例子
+## Quick Start
+在你的项目目录下创建一个`demo.py`文件，写入以下代码：
+```python
+from pydantic import BaseModel
+from xbrain.core import xbrain_tool
+class GenerateTag(BaseModel):
+    """创建一个新的插件"""
+    pass
 
-### 智能客服系统
-使用 NLP 模型构建智能应答机器人，优化客服效率。
-Todo 待完善。
-<!-- ### 实时数据分析
-使用 xbrain 快速部署数据分析模型，如实时交易数据分析，帮助金融机构监控和分析交易异常，提升风险管理能力。
+@xbrain_tool.Tool(model=GenerateTag)
+def generate_tag():
+    print("hello")
 
-### 内容推荐系统
-通过 xbrain 将推荐算法封装为 HTTP 服务，快速集成到电商或媒体网站中，实现个性化内容推荐，增强用户体验。
+在`__init__.py`文件中导入`demo.py`：
+```python
+from .demo import *
+```
 
-### 健康诊断服务
-医疗应用中，利用 xbrain 部署疾病诊断模型，通过 HTTP 接口提供远程诊断服务，支持医生和患者快速获取诊断结果。
+在项目入口处配置并运行xbrain，此时`demo.py`中的`generate_tag`函数被成功接入了xbrain中：
 
-### 教育与学习辅助
-将教育软件中的解题或语言学习模型通过 xbrain 接入，提供实时学习支持和反馈，增强学习体验和效果。
- -->
+```python
+from xbrain.core.chat import run 
+from xbrain.utils.config import Config
+config = Config()
+config.set_openai_config(base_url="https://api.openai-next.com/v1", api_key="xxxxx", model="gpt-4o-2024-08-06")
+messages = []
+messages.append({"role": "user", "content": "配置tag"})
+res = run(messages, user_prompt="从文章中提炼出关键信息")
+```
 
 ## 🤝 如何贡献
 
