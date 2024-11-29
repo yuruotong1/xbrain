@@ -67,12 +67,12 @@ class GenerateTag(BaseModel):
 @xbrain_tool.Tool(model=GenerateTag)
 def generate_tag():
     print("hello")
+```
 
 在`__init__.py`文件中导入`demo.py`：
 
-
 ```python
-from .demo import *
+from demo import *
 ```
 
 在项目入口处配置并运行xbrain，此时`demo.py`中的`generate_tag`函数被成功接入了xbrain中：
