@@ -3,8 +3,7 @@
 <img src="./image/README/logo.png" width="120" height="120" alt="XBrain">
 <h1>XBrain</h1>
 
-
-让 Python 函数变身为 AI 驱动的 HTTP 服务
+让 Python 函数秒接入 AI
 
 📘[详细文档](https://xbrain.notion.site/)|🎞️[介绍视频](https://www.bilibili.com/video/BV1c52FY4E51/?share_source=copy_web&vd_source=c28e503b050f016c21660b69e391d391)|🗨[English](https://github.com/yuruotong1/xbrain/blob/master/README_EN.md)
 
@@ -32,10 +31,8 @@
 
 
 但是，如果你用xbrain开发Agent应用，一切将变得非常美好，只需要两步：
-1. 编写工具
-2. 与AI聊天部署运行
-
-<img src="./image/README/xbrain开发步骤.png" style="background-color: white; padding: 10px;" />
+1. 在自己的函数上加入装饰器
+2. 入口处配置并运行 xbrain
 
 
 
@@ -72,6 +69,8 @@ def generate_tag():
     print("hello")
 
 在`__init__.py`文件中导入`demo.py`：
+
+
 ```python
 from .demo import *
 ```
