@@ -21,10 +21,13 @@ def process_chat_response(messages, chat_response):
         })
         res = chat(messages=messages)
 
-    else:
+    elif chat_response.parsed is not None:
+        messages.append({"role": "assistant", "content": str(chat_response.parsed)})
+        res = str(chat_response.parsed)
+    elif chat_response.content is not None:
         messages.append({"role": "assistant", "content": chat_response.content})
-        res = chat_response
-    return res.content
+        res = chat_response.content
+    return res
 
 def run(messages, user_prompt=""):
     chat_response = prepare_openai_tools(messages, user_prompt)
