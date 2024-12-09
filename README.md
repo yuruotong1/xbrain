@@ -3,7 +3,7 @@
 <img src="./image/README/logo.png" width="120" height="120" alt="XBrain">
 <h1>XBrain</h1>
 
-让 Python 函数秒接入 AI
+通过装饰器将函数接入OpenAI的Chat
 
 📘[详细文档](https://xbrain.notion.site/)|🎞️[介绍视频](https://www.bilibili.com/video/BV1c52FY4E51/?share_source=copy_web&vd_source=c28e503b050f016c21660b69e391d391)|🗨[English](https://github.com/yuruotong1/xbrain/blob/master/README_EN.md)
 
@@ -11,43 +11,8 @@
 
 ## 🤔解决了什么问题
 
+OpenAI的Funciton Call很有用，但每次都需要在 chat 接口中引用Json或者Pydantic Model，而XBrain只需要在Python函数上放一个装饰器，就能自动将函数接入到 chat 中。
 
-如果你用LangChain开发Agent应用，需要以下四步：
-1. 基础组件设置
-2. 定义工具集
-3. 定义Prompt模板
-4. 定义输出解析器
-
-<img src="./image/README/langchain开发步骤.png" style="background-color: white; padding: 10px;" />
-
-
-如果你用swarm开发Agent应用，需要以下四步：
-1. 基础组件设置
-2. Agent角色定义
-3. 任务协调系统
-4. 工作流程实现
-
-<img src="./image/README/swarm开发步骤.png" style="background-color: white; padding: 10px;" />
-
-
-但是，如果你用xbrain开发Agent应用，一切将变得非常美好，只需要两步：
-1. 在自己的函数上加入装饰器
-2. 入口处配置并运行 xbrain
-
-
-
-## 👥用户故事
-
-- AI 接口封装： 独立 AI 函数快速封装为 HTTP 服务，便于集成到其他系统中；
-- 功能验证： 早期开发阶段原型设计与测试，无需搭建复杂后端；
-- 轻量化微服务改造： 适合将 Python 脚本微服务化，轻松满足小规模、灵活部署需求。
-
-
-## ✨特点
-
-- 一键安装，开箱即用： 命令行一键启动，简单易用；
-- 无提示词设计： 摒弃提示词书写，用户专注于业务开发；
-- 将python函数接入Tools Call： 将本地 Python 代码直接接入大模型的工具调用。
 
 ## 📄文档
 
@@ -56,7 +21,13 @@
 - [开发者指南：欢迎加入我们](https://xbrain.notion.site/12842182d0a9803bb5dcdbfe71826915?pvs=4)
 
 ## Quick Start
+
+安装xbrain:
+
+`pip install pyxbrain`
+
 在你的项目目录下创建一个`demo.py`文件，写入以下代码：
+
 ```python
 from pydantic import BaseModel
 from xbrain.core import xbrain_tool
