@@ -10,28 +10,33 @@ import openai
 
 from xbrain.utils.input_util import get_input
 
-
-system_prompt = """
-{user_prompt}
-"""
-
 def chat(messages, tools=None, 
          user_prompt="You are a helpful assistant", response_format=None):
-    formatted_prompt = system_prompt.format(
-        user_prompt=user_prompt
-    )
+    invoke_response = invoke_openai(messages, tools, user_prompt, response_format, stream=False)
+    return invoke_response.choices[0].message
+
+def stream_chat(messages, tools=None, 
+         user_prompt="You are a helpful assistant", response_format=None):
+    invoke_response = invoke_openai(messages, tools, user_prompt, response_format, stream=True)
+    for chunk in invoke_response:
+        yield chunk.choices[0].delta.content
+
+
+def invoke_openai(messages, tools=None, 
+         user_prompt="You are a helpful assistant", response_format=None, stream=False):
     config = Config()
     client = OpenAI(base_url=config.OPENAI_BASE_URL, api_key=config.OPENAI_API_KEY)
-    messages = [{"role": "system", "content": formatted_prompt}] + messages
+    messages = [{"role": "system", "content": user_prompt}] + messages
     response = client.beta.chat.completions.parse(
         model=config.OPENAI_MODEL,
         messages=messages,
         temperature=0.1,
+        stream=stream,
         **({"response_format": response_format} if response_format is not None else {}),
         **({"tools": [openai.pydantic_function_tool(tool) for tool in tools] if tools else None} if tools else {}),
     )
-    message = response.choices[0].message
-    return message
+    return response
+        
 
 def text_to_speech(text: str):
     config = Config()
