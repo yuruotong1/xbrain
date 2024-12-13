@@ -13,7 +13,7 @@ setup(
     zip_safe=False,
     install_requires=[
         'pyyaml==6.0.2',
-        'openai==1.48.0',
+        'openai==1.55.3',
         'requests==2.32.3',
         'flask==3.0.3',
         'flask-openapi3==3.1.3',

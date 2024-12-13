@@ -18,8 +18,7 @@ def chat(messages, tools=None,
 def stream_chat(messages, tools=None, 
          user_prompt="You are a helpful assistant", response_format=None):
     invoke_response = invoke_openai(messages, tools, user_prompt, response_format, stream=True)
-    for chunk in invoke_response:
-        yield chunk.choices[0].delta.content
+    return invoke_response
 
 
 def invoke_openai(messages, tools=None, 
