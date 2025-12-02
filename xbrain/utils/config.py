@@ -41,6 +41,6 @@ class Constants:
     def __init__(self):
         self.CONFIG_NAME = "config.yaml"
         self.XBRAIN_DIR = ".xbrain"
-        self.VERSION = "1.1.31"
+        self.VERSION = "2.0.0"
 
 

@@ -3,7 +3,7 @@
 <img src="./image/README/logo.png" width="120" height="120" alt="XBrain">
 <h1>XBrain</h1>
 
-通过装饰器开发智能体，支持工作流管线，按 `level` 顺序编排执行。
+极简的智能体开发框架。
 
 </div>
 
