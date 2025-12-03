@@ -80,24 +80,27 @@ print(res)  # 返回满足 Summary 的内容
 
 ## 🧩工作流 Agent
 
-使用 `@Agent` 装饰器定义节点，工作流将按 `level` 由小到大依次执行：
+使用 `@Agent(name)` 装饰器定义智能体节点，并通过 `WorkFlow` 类按顺序执行：
 
 ```python
-from xbrain.core.xbrain_agent import Agent, work_flow_run
+from xbrain.core.xbrain_agent import Agent, WorkFlow
 
-@Agent
+@Agent(name="agent_a")
 class A:
-    level = 1
     def run(self, input):
-        return "下一步输入"
+        return f"{input} -> 处理后的数据A"
 
-@Agent
+@Agent(name="agent_b")
 class B:
-    level = 2
     def run(self, input):
-        return "最终输出"
+        return f"{input} -> 处理后的数据B"
 
-print(work_flow_run("起始输入"))  # "最终输出"
+# 创建工作流并指定执行顺序
+workflow = WorkFlow(agent_names=["agent_a", "agent_b"])
+
+# 执行工作流
+result = workflow.run("起始输入")
+print(result)  # "起始输入 -> 处理后的数据A -> 处理后的数据B"
 ```
 
 ## ⚙️配置文件位置
