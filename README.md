@@ -10,7 +10,7 @@
 ## ✨特性
 
 - 装饰器一键接入 Function Call（Pydantic 模型自动生成工具描述）
-- 工作流 `Agent` 管线，按 `level` 顺序编排执行
+- 工作流 `Agent` 管线，按指定顺序编排执行
 - 结构化响应解析：可传入 `response_format`（Pydantic）强类型返回
 
 ## 🧱环境要求
@@ -28,12 +28,14 @@
 
 ```python
 from pydantic import BaseModel
-from xbrain.core import xbrain_tool
+from xbrain.core import Tool
 
 class GenerateTag(BaseModel):
+    """生成标签的工具模型"""
     topic: str
+    """要生成标签的主题"""
 
-@xbrain_tool.Tool(model=GenerateTag)
+@Tool(model=GenerateTag)
 def generate_tag(topic: str):
     return f"tag: {topic}"
 ```
@@ -47,9 +49,10 @@ from demo import *
 在项目入口处配置并运行 XBrain，此时 `demo.py` 中的 `generate_tag` 被成功接入：
 
 ```python
-from xbrain.core.chat import run
+from xbrain.core import run
 from xbrain.utils.config import Config
 
+# 配置 OpenAI 信息（配置将保存在用户主目录下的 ~/.xbrain/config.yaml 文件中）
 config = Config()
 config.set_openai_config(
     base_url="https://api.openai.com/v1",
@@ -57,7 +60,7 @@ config.set_openai_config(
     model="gpt-4o-2024-08-06",
 )
 
-messages = [{"role": "user", "content": "请为主题“Python”生成标签"}]
+messages = [{"role": "user", "content": "请为主题\“Python\”生成标签"}]
 res = run(messages, user_prompt="你是一个能调用工具的助手")
 print(res)
 ```
@@ -68,6 +71,7 @@ print(res)
 
 ```python
 from pydantic import BaseModel
+from xbrain.core import run
 
 class Summary(BaseModel):
     title: str
@@ -83,20 +87,20 @@ print(res)  # 返回满足 Summary 的内容
 使用 `@Agent(name)` 装饰器定义智能体节点，并通过 `WorkFlow` 类按顺序执行：
 
 ```python
-from xbrain.core.xbrain_agent import Agent, WorkFlow
+from xbrain.core import Agent, WorkFlow
 
-@Agent(name="agent_a")
+@Agent
 class A:
     def run(self, input):
         return f"{input} -> 处理后的数据A"
 
-@Agent(name="agent_b")
+@Agent
 class B:
     def run(self, input):
         return f"{input} -> 处理后的数据B"
 
 # 创建工作流并指定执行顺序
-workflow = WorkFlow(agent_names=["agent_a", "agent_b"])
+workflow = WorkFlow([A, B])
 
 # 执行工作流
 result = workflow.run("起始输入")
