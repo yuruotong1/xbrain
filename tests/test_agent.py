@@ -10,13 +10,12 @@ from xbrain.utils.openai_utils import chat,chat_video
 import unittest
 class TestAgent(unittest.TestCase):
     def test_agent(self):
-        @Agent
-        class A:
+      
+        class A(Agent):
             def run(self, input):
                 print("接收", input)
-                return "agent2 输入"
-        @Agent
-        class B:
+     
+        class B(Agent):
             def run(self, input):
                 print("接收", input)
                 return "agent2 输出"
@@ -26,13 +25,11 @@ class TestAgent(unittest.TestCase):
         assert xbrain_res == "agent2 输出"
 
     def test_chat(self):
-        @Agent
-        class A:
+        class A(Agent):
             def run(self, input):
                 res = chat([{"role": "user", "content": input}], "你是一个智能助手")
                 return res
-        @Agent
-        class B:
+        class B(Agent): 
             def run(self, input):
                 res = chat([{"role": "user", "content": input}], "你是一个智能助手")
                 return res
@@ -41,6 +38,15 @@ class TestAgent(unittest.TestCase):
         xbrain_res = workflow.run("你好")
         print(xbrain_res)
 
-    def test_vedio(self):
-        res = chat_video("视频里讲了啥", r"C:\Users\yuruo\术语一致性翻译.mp4") 
-        print(res)
+    def test_global_context(self):
+        class A(Agent):
+            def run(self, input):
+                self.global_context["a"] = "a"
+                return "agent1 输出"
+        class B(Agent):
+            def run(self, input):
+                return self.global_context["a"]
+                
+        workflow = WorkFlow([A, B])
+        xbrain_res = workflow.run("test input")
+        assert xbrain_res == "a"

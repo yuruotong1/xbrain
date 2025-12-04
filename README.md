@@ -11,6 +11,7 @@
 
 - 装饰器一键接入 Function Call（Pydantic 模型自动生成工具描述）
 - 工作流 `Agent` 管线，按指定顺序编排执行
+- 智能体间全局上下文共享
 - 结构化响应解析：可传入 `response_format`（Pydantic）强类型返回
 
 ## 🧱环境要求
@@ -20,11 +21,15 @@
 
 ## 📦安装
 
-`pip install pyxbrain`
+```bash
+pip install pyxbrain
+```
 
 ## 🚀快速开始：接入一个工具
 
-在你的项目目录下创建一个 `demo.py` 文件：
+### 1. 创建工具文件
+
+在你的项目目录下创建一个 `demo.py` 文件，定义工具函数：
 
 ```python
 from pydantic import BaseModel
@@ -37,22 +42,43 @@ class GenerateTag(BaseModel):
 
 @Tool(model=GenerateTag)
 def generate_tag(topic: str):
+    """生成标签的工具函数"""
     return f"tag: {topic}"
 ```
 
-在包的 `__init__.py` 文件中导入 `demo.py`：
+### 2. 配置 OpenAI
 
-```python
-from demo import *
-```
-
-在项目入口处配置并运行 XBrain，此时 `demo.py` 中的 `generate_tag` 被成功接入：
+在项目入口处配置并运行 XBrain：
 
 ```python
 from xbrain.core import run
 from xbrain.utils.config import Config
+from demo import *  # 导入工具定义
 
 # 配置 OpenAI 信息（配置将保存在用户主目录下的 ~/.xbrain/config.yaml 文件中）
+config = Config()
+config.set_openai_config(
+    base_url="https://api.openai.com/v1",  # 或其他兼容的 API 端点
+    api_key="YOUR_OPENAI_API_KEY",
+    model="gpt-4o-2024-08-06",
+)
+
+# 调用 run 函数与智能体交互
+messages = [{"role": "user", "content": "请为主题\“Python\”生成标签"}]
+response = run(messages, user_prompt="你是一个能调用工具的助手")
+print(response)
+```
+
+## 📐结构化响应（可选）
+
+如果你希望模型严格返回某个结构，可以传入 `response_format` 参数（Pydantic 模型）：
+
+```python
+from pydantic import BaseModel
+from xbrain.core import run
+from xbrain.utils.config import Config
+
+# 配置 OpenAI（首次使用需要）
 config = Config()
 config.set_openai_config(
     base_url="https://api.openai.com/v1",
@@ -60,42 +86,32 @@ config.set_openai_config(
     model="gpt-4o-2024-08-06",
 )
 
-messages = [{"role": "user", "content": "请为主题\“Python\”生成标签"}]
-res = run(messages, user_prompt="你是一个能调用工具的助手")
-print(res)
-```
-
-## 📐结构化响应（可选）
-
-如果你希望模型严格返回某个结构，可以传入 `response_format`：
-
-```python
-from pydantic import BaseModel
-from xbrain.core import run
-
+# 定义响应结构
 class Summary(BaseModel):
     title: str
+    """总结的标题"""
     keywords: list[str]
+    """总结的关键词列表"""
 
-messages = [{"role": "user", "content": "请总结并给出关键词"}]
-res = run(messages, user_prompt="结构化助手", response_format=Summary)
-print(res)  # 返回满足 Summary 的内容
+# 发送消息并指定响应格式
+messages = [{"role": "user", "content": "请总结：Python 是一种广泛使用的解释型、高级和通用的编程语言。它支持多种编程范式，包括结构化、面向对象和函数式编程。Python 被设计为易于阅读和编写，具有简洁的语法。"}]
+response = run(messages, user_prompt="结构化助手", response_format=Summary)
+print(f"标题: {response.title}")
+print(f"关键词: {response.keywords}")
 ```
 
 ## 🧩工作流 Agent
 
-使用 `@Agent(name)` 装饰器定义智能体节点，并通过 `WorkFlow` 类按顺序执行：
+通过继承 `Agent` 类定义智能体节点，并通过 `WorkFlow` 类按顺序执行：
 
 ```python
 from xbrain.core import Agent, WorkFlow
 
-@Agent
-class A:
+class A(Agent):
     def run(self, input):
         return f"{input} -> 处理后的数据A"
 
-@Agent
-class B:
+class B(Agent):
     def run(self, input):
         return f"{input} -> 处理后的数据B"
 
@@ -107,11 +123,60 @@ result = workflow.run("起始输入")
 print(result)  # "起始输入 -> 处理后的数据A -> 处理后的数据B"
 ```
 
-## ⚙️配置文件位置
+### 全局上下文共享
 
-- 使用 `xbrain.utils.config.Config` 管理配置
-- 配置文件写入到用户目录：`~/xbrain/config.yaml`
-- 也可通过 `config.set_openai_config(base_url, api_key, model)` 动态设置并持久化
+WorkFlow 支持智能体间的全局上下文共享，通过 `self.global_context` 可以在不同智能体间传递数据：
+
+```python
+from xbrain.core import Agent, WorkFlow
+
+class A(Agent):
+    def run(self, input):
+        # 在全局上下文中存储数据
+        self.global_context["a"] = "a"
+        return "agent1 输出"
+
+class B(Agent):
+    def run(self, input):
+        # 从全局上下文中获取数据
+        return self.global_context["a"]
+
+workflow = WorkFlow([A, B])
+result = workflow.run("test input")
+print(result)  # "a"
+```
+
+## ⚙️配置管理
+
+XBrain 使用 `Config` 类管理配置信息，配置将保存在用户主目录下的 `~/.xbrain/config.yaml` 文件中。
+
+### 配置 OpenAI
+
+```python
+from xbrain.utils.config import Config
+
+config = Config()
+config.set_openai_config(
+    base_url="https://api.openai.com/v1",  # API 端点
+    api_key="YOUR_OPENAI_API_KEY",  # 你的 API Key
+    model="gpt-4o-2024-08-06",  # 使用的模型
+)
+```
+
+### 获取当前配置
+
+```python
+from xbrain.utils.config import Config
+
+config = Config()
+# 通过属性直接获取配置
+print(f"当前模型: {config.OPENAI_MODEL}")
+print(f"API 端点: {config.OPENAI_BASE_URL}")
+
+# 或通过 load_config() 方法获取完整配置
+full_config = config.load_config()
+print(f"OpenAI 配置: {full_config['openai']}")
+```
 
 ## 🤝如何贡献
 

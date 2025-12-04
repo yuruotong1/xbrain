@@ -1,23 +1,25 @@
 from xbrain.utils.openai_utils import chat
 
 class Agent:
-    def __init__(self, func):
-        if not hasattr(func, "run"):
-            raise ValueError("func must have run method")
-        self.worker = func
-        return None
+    def __init__(self, global_context):
+        self.global_context = global_context
+
 
     def run(self, *args, **kwargs):
-        # 3. 【关键】当外界调用 Agent.run 时，转交给内部的 worker 去执行
-        return self.worker.run(self, *args, **kwargs)
+        raise NotImplementedError("Agent.run must be implemented")
+
 
 
 class WorkFlow:
     """
     工作流类，用于顺序执行多个智能体。
     """
-    def __init__(self, agents):
-        self.agents = agents
+    def __init__(self, agent_class_list):
+        self.agents = []
+        self.global_context = {}
+        for agent_class in agent_class_list:
+            agent = agent_class(self.global_context)
+            self.agents.append(agent)
         
     def run(self, input):
         """
