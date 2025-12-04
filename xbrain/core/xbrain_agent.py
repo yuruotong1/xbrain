@@ -21,12 +21,12 @@ class WorkFlow:
             agent = agent_class(self.global_context)
             self.agents.append(agent)
         
-    def run(self, input):
+    def run(self, *args, **kwargs):
         """
         执行工作流，按顺序调用智能体的 run 方法。
         """
         first_agent = self.agents[0]
-        res = first_agent.run(input)
+        res = first_agent.run(*args, **kwargs)
         for agent in self.agents[1:]:
             res = agent.run(res)
         return res
