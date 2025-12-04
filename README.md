@@ -116,11 +116,36 @@ class B(Agent):
         return f"{input} -> 处理后的数据B"
 
 # 创建工作流并指定执行顺序
-workflow = WorkFlow([A, B])
+workflow = WorkFlow(A, B)  # 可以接受多个 Agent 类作为位置参数
 
 # 执行工作流
 result = workflow.run("起始输入")
-print(result)  # "起始输入 -> 处理后的数据A -> 处理后的数据B"
+print(result)  # {"A": "起始输入 -> 处理后的数据A", "B": "起始输入 -> 处理后的数据A -> 处理后的数据B"}
+```
+
+### 工作流的多种创建方式
+
+WorkFlow 支持多种创建方式：
+
+```python
+from xbrain.core import Agent, WorkFlow
+
+class A(Agent):
+    def run(self, input):
+        return f"{input} -> A"
+
+class B(Agent):
+    def run(self, input):
+        return f"{input} -> B"
+
+# 方式1：接受单个 Agent 类
+workflow1 = WorkFlow(A)
+
+# 方式2：接受多个 Agent 类作为位置参数
+workflow2 = WorkFlow(A, B)
+
+# 方式3：接受 Agent 类列表
+workflow3 = WorkFlow([A, B])
 ```
 
 ### 全局上下文共享
@@ -137,13 +162,13 @@ class A(Agent):
         return "agent1 输出"
 
 class B(Agent):
-    def run(self, input):
-        # 从全局上下文中获取数据
+    def run(self):
+        # 从全局上下文中获取数据，不需要 input 参数
         return self.global_context["a"]
 
-workflow = WorkFlow([A, B])
+workflow = WorkFlow(A, B)
 result = workflow.run("test input")
-print(result)  # "a"
+print(result)  # {"A": "agent1 输出", "B": "a"}
 ```
 
 ### 向工作流传递参数
@@ -161,14 +186,14 @@ class B(Agent):
     def run(self, input):
         return f"agent2 输出 {input}"
 
-workflow = WorkFlow([A, B])
+workflow = WorkFlow(A, B)
 result = workflow.run("test input", "arg1", "arg2")
-print(result)  # "agent2 输出 test input arg1 arg2"
+print(result)  # {"A": "test input arg1 arg2", "B": "agent2 输出 test input arg1 arg2"}
 ```
 
 ### 获取每个 Agent 的执行结果
 
-WorkFlow 会记录每个 Agent 的执行结果，你可以通过 `workflow.agent_result` 获取：
+WorkFlow.run() 方法直接返回一个字典，包含每个 Agent 的执行结果：
 
 ```python
 from xbrain.core import Agent, WorkFlow
@@ -181,11 +206,10 @@ class B(Agent):
     def run(self, input):
         return f"{input} b"
 
-workflow = WorkFlow([A, B])
+workflow = WorkFlow(A, B)
 result = workflow.run("test input")
-print(workflow.agent_result["A"])  # "test input a"
-print(workflow.agent_result["B"])  # "test input a b"
-print(result)  # "test input a b"
+print(result["A"])  # "test input a"
+print(result["B"])  # "test input a b"
 ```
 
 ### 在 Agent 中使用大模型
@@ -201,14 +225,20 @@ class A(Agent):
         res = chat([{"role": "user", "content": input}], "你是一个智能助手")
         return res
 
+# 创建包含单个 Agent 的工作流
+workflow = WorkFlow(A)
+result = workflow.run("你好")
+print(result)  # {"A": "你好！有什么我可以帮助你的吗？"}
+
+# 多个 Agent 示例
 class B(Agent): 
     def run(self, input):
         res = chat([{"role": "user", "content": input}], "你是一个智能助手")
         return res
 
-workflow = WorkFlow([A, B])
-result = workflow.run("你好")
-print(result)
+workflow2 = WorkFlow(A, B)
+result2 = workflow2.run("你好")
+print(result2)  # {"A": "你好！有什么我可以帮助你的吗？", "B": "你好！有什么我可以帮助你的吗？"}
 ```
 
 ## ⚙️配置管理
