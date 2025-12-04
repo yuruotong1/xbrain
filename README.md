@@ -146,6 +146,71 @@ result = workflow.run("test input")
 print(result)  # "a"
 ```
 
+### 向工作流传递参数
+
+你可以向 WorkFlow 的 `run` 方法传递额外参数，这些参数会被传递给第一个 Agent 的 `run` 方法：
+
+```python
+from xbrain.core import Agent, WorkFlow
+
+class A(Agent):
+    def run(self, input, arg1, arg2):
+        return f"{input} {arg1} {arg2}"
+
+class B(Agent):
+    def run(self, input):
+        return f"agent2 输出 {input}"
+
+workflow = WorkFlow([A, B])
+result = workflow.run("test input", "arg1", "arg2")
+print(result)  # "agent2 输出 test input arg1 arg2"
+```
+
+### 获取每个 Agent 的执行结果
+
+WorkFlow 会记录每个 Agent 的执行结果，你可以通过 `workflow.agent_result` 获取：
+
+```python
+from xbrain.core import Agent, WorkFlow
+
+class A(Agent):
+    def run(self, input):
+        return f"{input} a"
+
+class B(Agent):
+    def run(self, input):
+        return f"{input} b"
+
+workflow = WorkFlow([A, B])
+result = workflow.run("test input")
+print(workflow.agent_result["A"])  # "test input a"
+print(workflow.agent_result["B"])  # "test input a b"
+print(result)  # "test input a b"
+```
+
+### 在 Agent 中使用大模型
+
+你可以在 Agent 中使用 `chat` 函数与大模型交互：
+
+```python
+from xbrain.core import Agent, WorkFlow
+from xbrain.utils.openai_utils import chat
+
+class A(Agent):
+    def run(self, input):
+        res = chat([{"role": "user", "content": input}], "你是一个智能助手")
+        return res
+
+class B(Agent): 
+    def run(self, input):
+        res = chat([{"role": "user", "content": input}], "你是一个智能助手")
+        return res
+
+workflow = WorkFlow([A, B])
+result = workflow.run("你好")
+print(result)
+```
+
 ## ⚙️配置管理
 
 XBrain 使用 `Config` 类管理配置信息，配置将保存在用户主目录下的 `~/.xbrain/config.yaml` 文件中。

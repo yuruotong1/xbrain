@@ -64,3 +64,17 @@ class TestAgent(unittest.TestCase):
         workflow = WorkFlow([A, B])
         xbrain_res = workflow.run("test input", "arg1", "arg2")
         assert xbrain_res == "agent2 输出 test input arg1 arg2"
+
+
+    def test_agent_result(self):
+        class A(Agent):
+            def run(self, input):
+                return f"{input} a"
+        class B(Agent):
+            def run(self, input):
+                return f"{input} b"
+                
+        workflow = WorkFlow([A, B])
+        xbrain_res = workflow.run("test input")
+        assert workflow.agent_result["A"] == "test input a"
+        assert workflow.agent_result["B"] == "test input a b"

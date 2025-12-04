@@ -17,16 +17,21 @@ class WorkFlow:
     def __init__(self, agent_class_list):
         self.agents = []
         self.global_context = {}
+        self.agent_result = {}
+        
         for agent_class in agent_class_list:
             agent = agent_class(self.global_context)
             self.agents.append(agent)
         
     def run(self, *args, **kwargs):
         """
-        执行工作流，按顺序调用智能体的 run 方法。
+        顺序执行所有智能体，首个智能体接收外部参数，后续智能体以前一结果作为输入。
         """
-        first_agent = self.agents[0]
-        res = first_agent.run(*args, **kwargs)
-        for agent in self.agents[1:]:
-            res = agent.run(res)
+        res = None
+        for agent in self.agents:
+            if res is not None:
+                res = agent.run(res)
+            else:
+                res = agent.run(*args, **kwargs)
+            self.agent_result[agent.__class__.__name__] = res
         return res
