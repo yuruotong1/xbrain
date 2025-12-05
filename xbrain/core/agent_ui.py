@@ -2,6 +2,7 @@ import chainlit as cl
 import subprocess
 import sys
 import os
+from xbrain.utils.openai_utils import chat
 
 class AgentUI:
     def __init__(self, *workflow_list):
@@ -19,8 +20,8 @@ class AgentUI:
     async def on_chat_start(self):
         """聊天开始时的逻辑"""
         # 注意：这里 self.workflow_list 是你在 init 传入的
-        workflows_name = [str(w.__class__.__name__) for w in self.workflow_list]
-        commands = [{"id": w.__class__.__name__, "icon": "play", "description": f"运行 {w.__class__.__name__}"} for w in self.workflow_list]
+        workflows_name = [str(w.name) for w in self.workflow_list]
+        commands = [{"id": w.name, "icon": "play", "description": f"{w.description}"} for w in self.workflow_list]
         # 注册命令
         await cl.context.emitter.set_commands(commands)
         await cl.Message(
@@ -32,7 +33,7 @@ class AgentUI:
         user_input = message.content
         # 处理用户上传的文件
         uploaded_files = []
-    
+
         for element in message.elements:        
             # 获取文件信息
             file_info = {
@@ -47,14 +48,16 @@ class AgentUI:
             for file in uploaded_files:
                 print(f"- {file['name']} ({file['type']} {file['path']})")
         
-        # 模拟调用，将文件信息传递给工作流
-        print(cl.chat_context.to_openai())
-        # 假设workflow_list[0].run()可以接受文件参数
-        res = self.workflow_list[0].run()
+        messages = cl.chat_context.to_openai()
+        prompt = "你是一个智能助手"
+        chat_res = chat(messages, prompt, tools=[w.tool_call_json for w in self.workflow_list])
+        print(chat_res)
+        res = self.process_chat_response(chat_res)
+
         await cl.Message(
             content=f"{res}",
         ).send()
-
+        
     # === 核心魔法 2: 启动器 ===
     def launch(self):
         """
@@ -80,3 +83,31 @@ class AgentUI:
             subprocess.run(cmd)
         except KeyboardInterrupt:
             print("已停止服务")
+
+    def process_chat_response(self, chat_response):
+        if chat_response.content is None:
+            tool_res = self.run_tool(chat_response)
+            tool_res_str = "\n".join(map(str, tool_res))
+            return "工具执行结果：" + tool_res_str
+        
+        else:
+            return chat_response.content
+       
+
+    def __get_tool_by_name(self, tool_name):
+        for w in self.workflow_list:
+            if tool_name == w.name:
+                return w
+        return None
+        
+    def run_tool(self,openai_res):
+        res = []
+        for tool_call in openai_res.tool_calls:
+            work_flow = self.__get_tool_by_name(tool_call.function.name)
+            if work_flow is None:
+                print(f"未找到工具 {tool_call.function.name}")
+                continue            
+            run_res = work_flow.run(**json.loads(tool_call.function.arguments))
+            run_res = run_res if run_res is not None else "工具无返回值"
+            res.append(run_res)
+        return res

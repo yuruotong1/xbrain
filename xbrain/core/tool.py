@@ -5,12 +5,14 @@ from xbrain.core.context import context, Type, ActionRecord
 tools = []
 
 class Tool:
-    def __init__(self, model, hit_condition=None):
+    def __init__(self, model=None, hit_condition=None):
         self.model = model
         self.hit_condition = hit_condition
 
     def __call__(self, func):
         # 利用 openai 官方的转换函数，提取 name
+        if self.model is None:
+            self.model = func.__annotations__["input_pydantic_model"]
         function = openai.pydantic_function_tool(self.model)
         tools.append({
             "name": function["function"]["name"],

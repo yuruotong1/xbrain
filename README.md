@@ -38,7 +38,6 @@ from xbrain.core import Tool
 class GenerateTag(BaseModel):
     """生成标签的工具模型"""
     topic: str
-    """要生成标签的主题"""
 
 @Tool(model=GenerateTag)
 def generate_tag(topic: str):

@@ -8,16 +8,22 @@ from xbrain.core.agent_ui import AgentUI
 from xbrain.core.agent import Agent, WorkFlow
 
 
+     
 class A(Agent):
     def run(self):
-        return "A run"
-class B(Agent):
-    def run(self):
-        return "B run"
+        name = self.global_context["name"]
+        return name + "是一个好名字"
 
-w1 = WorkFlow(A)
-w2 = WorkFlow(B)
-agent_ui = AgentUI(w1, w2)
+param = {
+    "name": {
+        "type": "string",
+        "description": "名字",
+    }
+}
+
+
+w1 = WorkFlow([A], "name", "判断一个人的名字是好还是坏", param, ["name"])
+agent_ui = AgentUI(w1)
 
 
 if __name__ == "__main__":
