@@ -1,8 +1,9 @@
 from xbrain.utils.openai_utils import chat
 
 class Agent:
-    def __init__(self, global_context):
+    def __init__(self, global_context, agent_result):
         self.global_context = global_context
+        self.agent_result = agent_result
 
 
     def run(self, *args, **kwargs):
@@ -20,7 +21,7 @@ class WorkFlow:
         self.agent_result = {}
         
         for agent_class in agent_class_list:
-            agent = agent_class(self.global_context)
+            agent = agent_class(self.global_context, self.agent_result)
             self.agents.append(agent)
         
     def run(self, *args, **kwargs):

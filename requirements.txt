@@ -2,3 +2,4 @@ pyyaml==6.0.2
 openai==2.8.1
 twine
 build
+chainlit==2.9.3
