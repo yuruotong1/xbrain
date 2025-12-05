@@ -20,7 +20,6 @@ def process_chat_response(messages, chat_response):
             "tool_call_id": chat_response.tool_calls[0].id
         })
         res = chat(messages=messages)
-
     else:
         messages.append({"role": "assistant", "content": chat_response.content})
         res = chat_response

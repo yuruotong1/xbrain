@@ -30,8 +30,26 @@ class AgentUI:
     async def process_message(self, message: cl.Message):
         """处理消息的主逻辑"""
         user_input = message.content
-        # 模拟调用
+        # 处理用户上传的文件
+        uploaded_files = []
+    
+        for element in message.elements:        
+            # 获取文件信息
+            file_info = {
+                "name": element.name,
+                "type": element.type,
+                "path": element.path,
+            }
+            uploaded_files.append(file_info)
+        # 打印文件信息
+        if uploaded_files:
+            print(f"收到 {len(uploaded_files)} 个上传文件:")
+            for file in uploaded_files:
+                print(f"- {file['name']} ({file['type']} {file['path']})")
+        
+        # 模拟调用，将文件信息传递给工作流
         print(cl.chat_context.to_openai())
+        # 假设workflow_list[0].run()可以接受文件参数
         res = self.workflow_list[0].run()
         await cl.Message(
             content=f"{res}",

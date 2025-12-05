@@ -10,3 +10,7 @@ config.yaml
 .vsdb/
 logging_config.py
 .embedded.csv
+.files
+.conda
+.github
+.vscode

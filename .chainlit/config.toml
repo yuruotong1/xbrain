@@ -59,7 +59,7 @@ reaction_on_message_received = false
     # Note: Using "*/*" is not recommended as it may cause browser warnings
     accept = ["*/*"]
     max_files = 20
-    max_size_mb = 500
+    max_size_mb = 5000
 
 [features.audio]
     # Enable audio features
